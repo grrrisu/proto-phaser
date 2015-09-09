@@ -1,19 +1,25 @@
 var dungeon = (function() {
 
+  // legend
+  // x : forest
+  // . : empty (ground)
+  // 1-3: fruits
+  // R : rabbit
+  // L : leopard
   var map = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', '.', '.', '.', '.', '.', '3', '.', '.', '.', '.', '.', '.', '.', 'x'],
-    ['x', '.', '.', '1', '.', '.', '.', '.', '.', '.', '.', '2', '.', '.', 'x'],
+    ['x', '.', '.', '1', '.', '.', '.', '.', 'R', '.', '.', '2', '.', '.', 'x'],
     ['x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x'],
     ['x', '.', '.', '.', '1', '.', '.', '.', '.', '.', '2', '.', '.', '.', 'x'],
-    ['x', '3', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x'],
+    ['x', '3', '.', 'R', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x'],
     ['x', '.', 'x', '.', '.', 'x', '.', '.', '.', 'x', 'x', '.', 'x', '.', 'x'],
     ['.', '.', 'x', '.', '.', 'x', '.', '.', '.', 'x', '.', '3', 'x', '.', '.'],
     ['x', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', '2', 'x'],
-    ['x', '.', 'x', '1', '.', '.', '.', 'x', '.', 'x', '1', '.', 'x', '.', 'x'],
+    ['x', 'L', 'x', '1', '.', '.', '.', 'x', '.', 'x', '1', '.', 'x', '.', 'x'],
     ['x', '.', '.', '.', '.', '.', '.', 'x', '.', '.', '.', '.', 'x', '.', 'x'],
     ['x', '.', '.', '.', 'x', '.', '.', 'x', '1', '.', 'x', 'x', 'x', 'x', 'x'],
-    ['x', '.', '.', '.', 'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x'],
+    ['x', '.', '.', '.', 'x', '.', 'R', '.', '.', '.', '.', '.', '.', '.', 'x'],
     ['x', '.', '.', '2', 'x', '1', '.', '.', '2', '.', '.', '.', '.', '3', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
   ];
@@ -32,6 +38,8 @@ var dungeon = (function() {
     game.load.image('banana2', 'images/banana-2@2x.png');
     game.load.image('banana3', 'images/banana-3@2x.png');
     game.load.image('caveman', 'images/caveman.png');
+    game.load.image('leopard', 'images/leopard@2x.png');
+    game.load.image('rabbit', 'images/rabbit@2x.png');
 
     //game.load.audio('rainforest', 'audio/Rainforest.mp3');
     //game.load.audio('birds', 'audio/Birds_In_Forest.mp3');
@@ -47,14 +55,14 @@ var dungeon = (function() {
 
     ground = game.add.group();
 
-    banana1 = game.add.group();
-    banana1.enableBody = true;
+    fruits = game.add.group();
+    fruits.enableBody = true;
 
-    banana2 = game.add.group();
-    banana2.enableBody = true;
+    predators = game.add.group();
+    predators.enableBody = true;
 
-    banana3 = game.add.group();
-    banana3.enableBody = true;
+    herbivors = game.add.group();
+    herbivors.enableBody = true;
 
     map.forEach(function(row, y){
       row.forEach(function(field, x){
@@ -64,6 +72,10 @@ var dungeon = (function() {
           create_grass(x, y);
           if (field == '1' || field == '2' || field == '3'){
             create_fruit(x, y, field);
+          } else if(field == 'L') {
+            create_leopard(x, y);
+          } else if(field == 'R') {
+            create_rabbit(x, y);
           }
         }
       });
@@ -79,7 +91,7 @@ var dungeon = (function() {
     foodScore.fixedToCamera = true;
 
     backgroundSound = game.add.audio('jungle', 0.1, true); // key, volume, loop
-    backgroundSound.play();
+    //backgroundSound.play();
   }
 
   create_tree = function(x, y){
@@ -93,6 +105,44 @@ var dungeon = (function() {
     grass.scale.setTo(0.5);
   }
 
+  create_leopard = function(x, y){
+    leopard = predators.create(x * 55 + 22, y * 55 + 22, 'leopard');
+    leopard.anchor.set(0.5);
+    leopard.scale.setTo(0.5);
+  }
+
+  create_rabbit = function(x, y){
+    rabbit = herbivors.create(x * 55 + 22, y * 55 + 22, 'rabbit');
+    rabbit.scale.setTo(0.5);
+    rabbit.anchor.set(0.5);
+    console.log(rabbit);
+    assignRabbitMovement(rabbit);
+  }
+
+  assignRabbitMovement = function(rabbit){
+    d = 2;
+    targetX = game.rnd.integerInRange(rabbit.x / 55 - d, rabbit.x / 55 + d) * 55;
+    targetY = game.rnd.integerInRange(rabbit.y / 55 - d, rabbit.y / 55 + d) * 55;
+    if(targetX < rabbit.x){
+      rabbit.scale.x = -0.5;
+    } else if (targetX > rabbit.x){
+      rabbit.scale.x = 0.5;
+    }
+    delay = game.rnd.integerInRange(2000, 6000);
+    tween = game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
+    tween.onStart.add(this.startRabbit, this);
+    tween.onComplete.add(this.stopRabbit, this);
+  }
+
+  startRabbit = function(rabbit){
+    //rabbit.animations.stop('Play');
+    //rabbit.animations.play('Walk', 24, true);
+  }
+
+  stopRabbit = function(rabbit) {
+    assignRabbitMovement(rabbit);
+  }
+
   create_man = function(x, y) {
     man = game.add.sprite(x * 55 + 25, y * 55 + 30, 'caveman');
     man.anchor.setTo(0.5);
@@ -100,14 +150,15 @@ var dungeon = (function() {
   }
 
   create_fruit = function(x, y, type) {
-    fruit = banana1.create(x * 55, y * 55, 'banana'+type);
+    fruit = fruits.create(x * 55, y * 55, 'banana'+type);
     fruit.scale.setTo(0.5);
   }
 
   update = function() {
     game.physics.arcade.collide(man, forest);
 
-    game.physics.arcade.overlap(man, banana1, collectBanana, null, this);
+    game.physics.arcade.overlap(man, fruits, collectBanana, null, this);
+    game.physics.arcade.overlap(man, predators, attacked, null, this);
 
     speed = 150
     man.body.velocity.x = 0;
@@ -149,6 +200,11 @@ var dungeon = (function() {
         break;
     }
     banana.kill();
+  }
+
+  function attacked(man, leopard){
+    man.kill();
+    // GAME OVER!
   }
 
   function incFood(amount){
