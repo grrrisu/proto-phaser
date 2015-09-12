@@ -106,13 +106,13 @@ var dungeon = (function() {
   }
 
   create_leopard = function(x, y){
-    leopard = predators.create(x * 55 + 22, y * 55 + 22, 'leopard');
+    leopard = predators.create(x * 55 + 22.5, y * 55 + 22.5, 'leopard');
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
   }
 
   create_rabbit = function(x, y){
-    rabbit = herbivors.create(x * 55 + 22, y * 55 + 22, 'rabbit');
+    rabbit = herbivors.create(x * 55 + 22.5, y * 55 + 22.5, 'rabbit');
     rabbit.scale.setTo(0.5);
     rabbit.anchor.set(0.5);
     console.log(rabbit);
@@ -121,8 +121,8 @@ var dungeon = (function() {
 
   assignRabbitMovement = function(rabbit){
     d = 2;
-    targetX = game.rnd.integerInRange(rabbit.x / 55 - d, rabbit.x / 55 + d) * 55;
-    targetY = game.rnd.integerInRange(rabbit.y / 55 - d, rabbit.y / 55 + d) * 55;
+    targetX = game.rnd.integerInRange((rabbit.x - 22.5) / 55 - d, (rabbit.x - 22.5) / 55 + d) * 55 + 22.5;
+    targetY = game.rnd.integerInRange((rabbit.y - 22.5) / 55 - d, (rabbit.y - 22.5) / 55 + d) * 55 + 22.5;
     if(targetX < rabbit.x){
       rabbit.scale.x = -0.5;
     } else if (targetX > rabbit.x){
