@@ -24,7 +24,7 @@ var dungeon = (function() {
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
   ];
 
-  var map = [
+  var map2 = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', '.', '.', '.', '2', 'x', '.', '.', '.', '.', 'x', '.', '.', '2', '.', '.', '.', '.', '.', '.', '1', 'x', '.', '.', 'x'],
     ['x', '.', '.', '.', '.', 'x', '.', '.', '.', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', '.', 'L', '.', '.', 'x', '.', 'R', 'x'],
@@ -50,7 +50,35 @@ var dungeon = (function() {
     ['x', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', 'x'],
     ['x', '.', 'x', '.', '1', '.', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', '.', 'R', '.', 'x', '.', '.', '.', 'R', '3', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-  ]
+  ];
+
+  var map = [
+    ['x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x'],
+    ['x', '2', '.', 'x', '.', '.', '.', '.', 'x', '.', '.', '.', '.', '.', '.', '.', '.', 'x', '.', '.', '.', '.', 'x', '.', 'x'],
+    ['x', '.', '.', 'x', 'x', '.', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', '.', '.', '3', 'x', 'x', 'x', '.', '.', 'x', '2', 'x'],
+    ['x', '.', 'R', '.', '.', '.', '.', '.', '1', '.', '.', '.', '.', 'x', '.', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', 'x'],
+    ['x', 'x', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', '.', 'x', 'R', '.', '.', '.', '.', '.', '.', 'x', '.', '.', 'x'],
+    ['x', '.', 'x', '.', '.', 'x', '3', '.', 'x', '.', '.', 'x', '2', '.', '.', '1', 'x', 'x', '.', '.', 'x', 'x', '.', '.', 'x'],
+    ['.', '.', 'x', '.', '.', '.', '.', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', '.', 'x', '.', '.', 'x', '.', '.', '.', '.'],
+    ['x', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', 'R', '.', '.', 'x', '.', '.', '.', 'x', '.', '1', 'x', '.', '.', '.', 'x'],
+    ['x', '1', '.', '.', 'x', 'x', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', 'L', '.', 'x'],
+    ['x', '.', 'x', '.', '.', '.', '.', 'x', '.', '.', '.', 'x', '1', '.', '.', 'x', '.', '.', '.', '.', '.', '.', 'x', 'x', 'x'],
+    ['x', '.', 'x', 'x', '.', '.', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', 'x', 'x', '.', '.', 'x', '3', 'x'],
+    ['x', '.', '.', '.', '.', '.', '.', 'x', '.', '.', 'R', '.', '.', 'x', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', 'x'],
+    ['.', '.', '.', 'x', 'x', '.', '.', '.', '.', 'x', 'x', '.', '.', '.', 'x', 'x', 'x', '.', 'x', '.', 'R', '.', '.', '.', '.'],
+    ['x', '.', '.', '.', 'x', '.', '.', 'x', '1', '.', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', 'x', 'x', '.', '.', 'x'],
+    ['x', '2', '.', '.', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '1', '.', '.', '.', '.', '.', 'x', '.', '.', 'x'],
+    ['x', '.', '.', '1', 'x', '.', '2', 'x', '.', '.', 'x', '3', '.', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '2', 'x'],
+    ['x', '.', '.', 'x', 'x', 'x', '.', '.', '.', 'x', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', '1', '.', 'x', 'x', 'x', 'x'],
+    ['x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x', '.', 'x', '.', '.', 'x', '2', '.', 'x', '.', '.', '.', '.', '.', 'x'],
+    ['.', '.', 'R', '.', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', '.', '.'],
+    ['x', 'x', 'x', '.', 'x', 'x', '.', 'x', 'x', '.', 'x', '.', 'x', '.', 'x', 'x', '.', '.', '.', '.', '.', '.', 'x', '.', 'x'],
+    ['x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x', 'R', '.', '.', '.', '.', '.', 'x', '.', '.', '.', '1', 'x', '.', 'x'],
+    ['x', '.', 'x', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', '.', '.', '.', '.', '1', 'x', 'x', '.', '.', 'x', 'x', 'x', 'x'],
+    ['x', '.', '.', 'x', '.', '3', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', '.', 'x', 'x', '.', '.', '.', '.', 'x', '.', 'x'],
+    ['x', '3', '.', 'x', '.', '.', '.', '.', '1', '.', 'x', '1', '.', '.', 'x', 'R', '.', '.', '.', '.', 'x', '2', '.', '3', 'x'],
+    ['x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x'],
+  ];
 
   var game;
   var man;
@@ -71,7 +99,9 @@ var dungeon = (function() {
 
     //game.load.audio('rainforest', 'audio/Rainforest.mp3');
     //game.load.audio('birds', 'audio/Birds_In_Forest.mp3');
-    game.load.audio('jungle', 'audio/Jungle.mp3');
+    //game.load.audio('jungle', 'audio/Jungle.mp3');
+    game.load.audio('rainforest', 'audio/rainforest_ambience.mp3');
+    game.load.audio('footsteps', 'audio/footsteps_dry_wheat.mp3');
   }
 
   create = function() {
@@ -95,22 +125,23 @@ var dungeon = (function() {
     map.forEach(function(row, y){
       row.forEach(function(field, x){
         if (field == 'x'){
-          create_tree(x, y);
+          createTree(x, y);
         } else {
-          create_grass(x, y);
+          createGrass(x, y);
           if (field == '1' || field == '2' || field == '3'){
-            create_fruit(x, y, field);
+            createFruit(x, y, field);
           } else if(field == 'L') {
-            create_leopard(x, y);
+            createLeopard(x, y);
           } else if(field == 'R') {
-            create_rabbit(x, y);
+            createRabbit(x, y);
           }
         }
       });
     });
 
-    create_man(12, 12);
-    //man.body.collideWorldBounds = true;
+    createMan(12, 12);
+
+    maskGraphics = this.game.add.graphics(0, 0);
 
     cursors = game.input.keyboard.createCursorKeys();
     game.camera.follow(man);
@@ -118,44 +149,52 @@ var dungeon = (function() {
     foodScore = game.add.text(0, 0, "Food: 0", { font: "32px Arial", fill: "#ffffff", align: "center" });
     foodScore.fixedToCamera = true;
 
-    backgroundSound = game.add.audio('jungle', 0.1, true); // key, volume, loop
-    //backgroundSound.play();
+    backgroundSound = game.add.audio('rainforest', 0.1, true); // key, volume, loop
+    footstepsSound  = game.add.audio('footsteps', 1.0,  true);
+    backgroundSound.play();
   }
 
-  create_tree = function(x, y){
+  createTree = function(x, y){
     tree = forest.create(x * 55, y * 55, '13_forest');
     tree.scale.setTo(0.5);
     tree.body.immovable = true;
   }
 
-  create_grass = function(x, y){
+  createGrass = function(x, y){
     grass = ground.create(x * 55, y * 55, '3_grass');
     grass.scale.setTo(0.5);
   }
 
-  create_leopard = function(x, y){
+  createLeopard = function(x, y){
     leopard = predators.create(x * 55 + 22.5, y * 55 + 22.5, 'leopard');
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
   }
 
-  create_rabbit = function(x, y){
+  createRabbit = function(x, y){
     rabbit = herbivors.create(x * 55 + 22.5, y * 55 + 22.5, 'rabbit');
     rabbit.scale.setTo(0.5);
     rabbit.anchor.set(0.5);
-    console.log(rabbit);
     assignRabbitMovement(rabbit);
   }
 
   assignRabbitMovement = function(rabbit){
-    d = 2;
-    targetX = game.rnd.integerInRange((rabbit.x - 22.5) / 55 - d, (rabbit.x - 22.5) / 55 + d) * 55 + 22.5;
-    targetY = game.rnd.integerInRange((rabbit.y - 22.5) / 55 - d, (rabbit.y - 22.5) / 55 + d) * 55 + 22.5;
-    if(targetX < rabbit.x){
-      rabbit.scale.x = -0.5;
-    } else if (targetX > rabbit.x){
-      rabbit.scale.x = 0.5;
+    var d = 2;
+    var direction = game.rnd.integerInRange(0,1);
+    var rpos = relativePosition(rabbit.x, rabbit.y);
+    if(direction == 0) {
+      targetX = game.rnd.integerInRange(rpos.x - d, rpos.x + d) * 55 + 22.5;
+      if(targetX < rabbit.x){
+        rabbit.scale.x = -0.5;
+      } else if (targetX > rabbit.x){
+        rabbit.scale.x = 0.5;
+      }
+      targetY = rabbit.y;
+    } else {
+      targetY = game.rnd.integerInRange(rpos.y - d, rpos.y + d) * 55 + 22.5;
+      targetX = rabbit.x;
     }
+
     delay = game.rnd.integerInRange(2000, 6000);
     tween = game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
     tween.onStart.add(this.startRabbit, this);
@@ -171,13 +210,13 @@ var dungeon = (function() {
     assignRabbitMovement(rabbit);
   }
 
-  create_man = function(x, y) {
+  createMan = function(x, y) {
     man = game.add.sprite(x * 55 + 25, y * 55 + 30, 'caveman');
     man.anchor.setTo(0.5);
     game.physics.arcade.enable(man);
   }
 
-  create_fruit = function(x, y, type) {
+  createFruit = function(x, y, type) {
     fruit = fruits.create(x * 55, y * 55, 'banana'+type);
     fruit.scale.setTo(0.5);
   }
@@ -213,6 +252,9 @@ var dungeon = (function() {
 
         man.animations.play('right');
     }
+
+    rayCast();
+
   }
 
   function collectBanana(man, banana) {
@@ -238,6 +280,40 @@ var dungeon = (function() {
   function incFood(amount){
     foodCollected += amount;
     foodScore.text = 'Food: ' + foodCollected;
+  }
+
+  function rayCast() {
+    maskGraphics.clear();
+    maskGraphics.lineStyle(2, 0xffffff, 1);
+    var numberOfRays = 40;
+    var rayLength = 5;
+    var rpos = relativePosition(man.x, man.y);
+
+    for(var i = 0; i < numberOfRays; i++){
+      maskGraphics.moveTo(man.x, man.y);
+      var rayAngle = (Math.PI * 2 / numberOfRays) * i
+      var lastX = man.x;
+      var lastY = man.y;
+      for(var j= 1; j <= rayLength; j+=1){
+        //var landingX = Math.round(man.x-(55*j) * Math.cos(rayAngle));
+        //var landingY = Math.round(man.y-(55*j) * Math.sin(rayAngle));
+
+        var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
+        var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
+        if(map[landingY][landingX] != 'x'){
+          lastX = landingX * 55;
+          lastY = landingY * 55;
+        } else {
+          maskGraphics.lineTo(lastX, lastY);
+          break;
+        }
+      }
+      maskGraphics.lineTo(lastX, lastY);
+    }
+  }
+
+  function relativePosition(ax, ay){
+    return { x: (ax - 22.5) / 55, y: (ay - 22.5) / 55 };
   }
 
   function render() {
