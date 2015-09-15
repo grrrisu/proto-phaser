@@ -108,6 +108,8 @@ var dungeon = (function() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.world.setBounds(0, 0, 25 * 55, 25 * 55);
 
+    background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '13_forest');
+
     forest = game.add.group();
     forest.enableBody = true;
 
@@ -141,7 +143,6 @@ var dungeon = (function() {
 
     createMan(12, 12);
 
-    maskGraphics = this.game.add.graphics(0, 0);
 
     cursors = game.input.keyboard.createCursorKeys();
     game.camera.follow(man);
@@ -152,6 +153,14 @@ var dungeon = (function() {
     backgroundSound = game.add.audio('rainforest', 0.1, true); // key, volume, loop
     footstepsSound  = game.add.audio('footsteps', 1.0,  true);
     backgroundSound.play();
+
+    maskGraphics = game.add.graphics(0, 0);
+    rayCast();
+    forest.mask = maskGraphics;
+    ground.mask = maskGraphics;
+    fruits.mask = maskGraphics;
+    predators.mask = maskGraphics;
+    herbivors.mask = maskGraphics;
   }
 
   createTree = function(x, y){
@@ -232,28 +241,22 @@ var dungeon = (function() {
     man.body.velocity.y = 0;
 
     if (cursors.left.isDown) {
-        //  Move to the left
         man.body.velocity.x = -speed;
-
         man.animations.play('left');
+        rayCast();
     } else if (cursors.right.isDown) {
-        //  Move to the right
         man.body.velocity.x = speed;
-
         man.animations.play('right');
+        rayCast();
     } else if (cursors.down.isDown) {
-        //  Move to the right
         man.body.velocity.y = speed;
-
         man.animations.play('right');
+        rayCast();
     } else if (cursors.up.isDown) {
-        //  Move to the right
         man.body.velocity.y = -speed;
-
         man.animations.play('right');
+        rayCast();
     }
-
-    rayCast();
 
   }
 
@@ -284,31 +287,31 @@ var dungeon = (function() {
 
   function rayCast() {
     maskGraphics.clear();
-    maskGraphics.lineStyle(2, 0xffffff, 1);
-    var numberOfRays = 40;
+    //maskGraphics.lineStyle(2, 0xffffff, 1);
+    maskGraphics.beginFill(0x000000);
+    var numberOfRays = 64;
     var rayLength = 5;
     var rpos = relativePosition(man.x, man.y);
 
     for(var i = 0; i < numberOfRays; i++){
-      maskGraphics.moveTo(man.x, man.y);
+      //maskGraphics.moveTo(man.x, man.y);
       var rayAngle = (Math.PI * 2 / numberOfRays) * i
       var lastX = man.x;
       var lastY = man.y;
-      for(var j= 1; j <= rayLength; j+=1){
-        //var landingX = Math.round(man.x-(55*j) * Math.cos(rayAngle));
-        //var landingY = Math.round(man.y-(55*j) * Math.sin(rayAngle));
-
+      for(var j= 0; j <= rayLength; j+=1){
         var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
         var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
+
+        maskGraphics.drawRect(landingX * 55, landingY * 55, 55, 55);
+
         if(map[landingY][landingX] != 'x'){
           lastX = landingX * 55;
           lastY = landingY * 55;
         } else {
-          maskGraphics.lineTo(lastX, lastY);
           break;
         }
       }
-      maskGraphics.lineTo(lastX, lastY);
+      //maskGraphics.lineTo(lastX, lastY);
     }
   }
 
