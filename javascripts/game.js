@@ -163,8 +163,10 @@ var dungeon = (function() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.world.setBounds(0, 0, 25 * 55, 25 * 55);
 
-    //background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, 'jungle_front');
-    //background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '13_forest');
+    createFog(22 * 55, 22 *55);
+    background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '3_grass');
+    //background.tint = 0x999999;
+    background.alpha = 0.6;
 
     forest = game.add.group();
     forest.enableBody = true;
@@ -199,7 +201,6 @@ var dungeon = (function() {
 
     createMan(12, 12);
 
-
     cursors = game.input.keyboard.createCursorKeys();
     game.camera.follow(man);
 
@@ -210,23 +211,24 @@ var dungeon = (function() {
     footstepsSound  = game.add.audio('footsteps', 1.0,  true);
     backgroundSound.play();
 
-    fogFilter = new Phaser.Filter(game, null, fogSrc);
-    fogFilter.setResolution(800, 600);
-    
-    fog = game.add.sprite();
-    fog.width = 25 * 55;
-    fog.height = 25 *55;
-    fog.alpha = 0.1;
-    fog.filters = [ fogFilter ];
-
     maskGraphics = game.add.graphics(0, 0);
     rayCast();
-    // forest.mask = maskGraphics;
-    // ground.mask = maskGraphics;
-    fog.mask = maskGraphics;
+    //forest.mask = maskGraphics;
+    ground.mask = maskGraphics;
     fruits.mask = maskGraphics;
     predators.mask = maskGraphics;
     herbivors.mask = maskGraphics;
+  }
+
+  createFog = function(width, height){
+    fogFilter = new Phaser.Filter(game, null, fogSrc);
+    fogFilter.setResolution(800, 600);
+
+    fog = game.add.sprite();
+    fog.width = width;
+    fog.height = height;
+    fog.alpha = 0.1;
+    fog.filters = [ fogFilter ];
   }
 
   createTree = function(x, y){
@@ -357,7 +359,7 @@ var dungeon = (function() {
     maskGraphics.clear();
     //maskGraphics.lineStyle(2, 0xffffff, 1);
     maskGraphics.beginFill(0x000000);
-    var numberOfRays = 64;
+    var numberOfRays = 96;
     var rayLength = 5;
     var rpos = relativePosition(man.x, man.y);
 
