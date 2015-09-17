@@ -80,10 +80,65 @@ var dungeon = (function() {
     ['x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x'],
   ];
 
+  // form http://glslsandbox.com/e#27661.0
+  var fogSrc = [
+    "#ifdef GL_ES",
+    "precision mediump float;",
+    "#endif",
+
+    "uniform float time;",
+    "uniform vec2 mouse;",
+    "uniform vec2 resolution;",
+
+    "const int oct = 8;",
+    "const float per = 0.5;",
+    "const float PI = 3.1415926;",
+    "const float cCorners = 1.0/16.0;",
+    "const float cSides = 1.0/8.0;",
+    "const float cCenter = 1.0/4.0;",
+
+    "float interpolate(float a, float b, float x){",
+    	"float f = (1.0 - cos(x*PI))*0.5;",
+    	"return a * (1.0 - f) + b * f;",
+    "}",
+
+    "float rnd(vec2 p){",
+    	"return fract(sin(dot(p, vec2(12.9898, 78.233)))*43758.5453);",
+    "}",
+
+    "float irnd(vec2 p){",
+    	"vec2 i = floor(p);",
+    	"vec2 f = fract(p);",
+    	"vec4 v = vec4(rnd(vec2(i.x, i.y)),",
+    		     "rnd(vec2(i.x+1.0, i.y)),",
+    		     "rnd(vec2(i.x, i.y+1.0)),",
+    		     "rnd(vec2(i.x+1.0, i.y+1.0)));",
+    	"return interpolate(interpolate(v.x, v.y, f.x), interpolate(v.z, v.w, f.x), f.y);",
+    "}",
+
+    "float noise(vec2 p){",
+    	"float t = 0.0;",
+    	"for(int i = 0; i < oct; i++){",
+    		"float freq = pow(2.0, float(i));",
+    		"float amp = pow(per, float(oct-i));",
+    		"t += irnd(vec2(p.x/freq, p.y/freq))*amp;",
+    	"}",
+    	"return t;",
+    "}",
+
+    "void main( void ) {",
+    	"vec2 t = gl_FragCoord.xy + vec2(time*10.0);",
+    	"float n = noise(t);",
+
+    	"gl_FragColor = vec4(vec3(n), 1.0);",
+    "}"
+  ]
+
   var game;
   var man;
   var forest;
   var foodCollected = 0;
+  var fogFilter;
 
   preload = function() {
     game.load.image('1_grass', 'images/1_grass@2x.png');
@@ -108,7 +163,10 @@ var dungeon = (function() {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.world.setBounds(0, 0, 25 * 55, 25 * 55);
 
-    background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '13_forest');
+    createFog(22 * 55, 22 *55);
+    background = game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '3_grass');
+    //background.tint = 0x999999;
+    background.alpha = 0.6;
 
     forest = game.add.group();
     forest.enableBody = true;
@@ -143,7 +201,6 @@ var dungeon = (function() {
 
     createMan(12, 12);
 
-
     cursors = game.input.keyboard.createCursorKeys();
     game.camera.follow(man);
 
@@ -156,11 +213,22 @@ var dungeon = (function() {
 
     maskGraphics = game.add.graphics(0, 0);
     rayCast();
-    forest.mask = maskGraphics;
+    //forest.mask = maskGraphics;
     ground.mask = maskGraphics;
     fruits.mask = maskGraphics;
     predators.mask = maskGraphics;
     herbivors.mask = maskGraphics;
+  }
+
+  createFog = function(width, height){
+    fogFilter = new Phaser.Filter(game, null, fogSrc);
+    fogFilter.setResolution(800, 600);
+
+    fog = game.add.sprite();
+    fog.width = width;
+    fog.height = height;
+    fog.alpha = 0.1;
+    fog.filters = [ fogFilter ];
   }
 
   createTree = function(x, y){
@@ -258,6 +326,8 @@ var dungeon = (function() {
         rayCast();
     }
 
+    fogFilter.update();
+
   }
 
   function collectBanana(man, banana) {
@@ -289,7 +359,7 @@ var dungeon = (function() {
     maskGraphics.clear();
     //maskGraphics.lineStyle(2, 0xffffff, 1);
     maskGraphics.beginFill(0x000000);
-    var numberOfRays = 64;
+    var numberOfRays = 96;
     var rayLength = 5;
     var rpos = relativePosition(man.x, man.y);
 
