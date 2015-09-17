@@ -1,0 +1,29 @@
+{
+  "name": "proto-phaser",
+  "version": "0.0.1",
+  "description": "prototype a dungeon with phraser",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grrrisu/proto-phaser.git"
+  },
+  "keywords": [
+    "prototype",
+    "phraser"
+  ],
+  "author": "Alessandro Di Maria",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grrrisu/proto-phaser/issues"
+  },
+  "homepage": "https://github.com/grrrisu/proto-phaser#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.5.2"
+  }
+}
