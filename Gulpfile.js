@@ -7,6 +7,12 @@ gulp.task('default', ['compile_es6']);
 
 gulp.task("compile_es6", function () {
   return gulp.src("src/**/*.es6.js")
+    .pipe(babel())
+    .pipe(gulp.dest("javascripts"));
+});
+
+gulp.task("compile_and_unify_es6", function () {
+  return gulp.src("src/**/*.js")
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(concat("all.js"))

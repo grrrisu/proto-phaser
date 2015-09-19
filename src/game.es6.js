@@ -1,34 +1,6 @@
-class Dawning {
+//import { DawningMap } from 'map.es6.js';
 
-  loadMap(){
-    this.map = [
-      ['x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x'],
-      ['x', '2', '.', 'x', '.', '.', '.', '.', 'x', '.', '.', '.', '.', '.', '.', '.', '.', 'x', '.', '.', '.', '.', 'x', '.', 'x'],
-      ['x', '.', '.', 'x', 'x', '.', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', '.', '.', '3', 'x', 'x', 'x', '.', '.', 'x', '2', 'x'],
-      ['x', '.', 'R', '.', '.', '.', '.', '.', '1', '.', '.', '.', '.', 'x', '.', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', 'x'],
-      ['x', 'x', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', '.', 'x', 'R', '.', '.', '.', '.', '.', '.', 'x', '.', '.', 'x'],
-      ['x', '.', 'x', '.', '.', 'x', '3', '.', 'x', '.', '.', 'x', '2', '.', '.', '1', 'x', 'x', '.', '.', 'x', 'x', '.', '.', 'x'],
-      ['.', '.', 'x', '.', '.', '.', '.', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', '.', 'x', '.', '.', 'x', '.', '.', '.', '.'],
-      ['x', '.', 'x', '.', '.', 'x', '.', '.', '.', '.', 'R', '.', '.', 'x', '.', '.', '.', 'x', '.', '1', 'x', '.', '.', '.', 'x'],
-      ['x', '1', '.', '.', 'x', 'x', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', 'L', '.', 'x'],
-      ['x', '.', 'x', '.', '.', '.', '.', 'x', '.', '.', '.', 'x', '1', '.', '.', 'x', '.', '.', '.', '.', '.', '.', 'x', 'x', 'x'],
-      ['x', '.', 'x', 'x', '.', '.', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', 'x', 'x', '.', '.', 'x', '3', 'x'],
-      ['x', '.', '.', '.', '.', '.', '.', 'x', '.', '.', 'R', '.', '.', 'x', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', 'x'],
-      ['.', '.', '.', 'x', 'x', '.', '.', '.', '.', 'x', 'x', '.', '.', '.', 'x', 'x', 'x', '.', 'x', '.', 'R', '.', '.', '.', '.'],
-      ['x', '.', '.', '.', 'x', '.', '.', 'x', '1', '.', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', 'x', 'x', '.', '.', 'x'],
-      ['x', '2', '.', '.', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '1', '.', '.', '.', '.', '.', 'x', '.', '.', 'x'],
-      ['x', '.', '.', '1', 'x', '.', '2', 'x', '.', '.', 'x', '3', '.', 'x', 'x', 'x', 'x', '.', '.', '.', '.', '.', '.', '2', 'x'],
-      ['x', '.', '.', 'x', 'x', 'x', '.', '.', '.', 'x', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', '1', '.', 'x', 'x', 'x', 'x'],
-      ['x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x', '.', 'x', '.', '.', 'x', '2', '.', 'x', '.', '.', '.', '.', '.', 'x'],
-      ['.', '.', 'R', '.', 'x', '.', '.', '.', 'x', '.', '.', '.', 'x', '.', '.', 'x', 'x', 'x', 'x', 'x', 'x', '.', 'x', '.', '.'],
-      ['x', 'x', 'x', '.', 'x', 'x', '.', 'x', 'x', '.', 'x', '.', 'x', '.', 'x', 'x', '.', '.', '.', '.', '.', '.', 'x', '.', 'x'],
-      ['x', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'x', 'R', '.', '.', '.', '.', '.', 'x', '.', '.', '.', '1', 'x', '.', 'x'],
-      ['x', '.', 'x', 'x', '.', 'x', 'x', 'x', '.', 'x', 'x', 'x', '.', '.', '.', '.', '1', 'x', 'x', '.', '.', 'x', 'x', 'x', 'x'],
-      ['x', '.', '.', 'x', '.', '3', 'x', '.', '.', '.', '.', '.', '.', '.', 'x', '.', 'x', 'x', '.', '.', '.', '.', 'x', '.', 'x'],
-      ['x', '3', '.', 'x', '.', '.', '.', '.', '1', '.', 'x', '1', '.', '.', 'x', 'R', '.', '.', '.', '.', 'x', '2', '.', '3', 'x'],
-      ['x', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', '.', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ];
-  }
+Dawning.Game = class Game {
 
   getFogSrc(){
     // form http://glslsandbox.com/e#27661.0
@@ -86,12 +58,12 @@ class Dawning {
     ]
   }
 
-  constructor(width, height, element){
+  constructor(options){
     this.game = new Phaser.Game(
-          width,
-          height,
+          options.width,
+          options.height,
           Phaser.AUTO,
-          element,
+          options.element,
           {
             preload: this.preload,
             create: this.create,
@@ -99,7 +71,12 @@ class Dawning {
             render: this.render
           }
     );
+    this.size = options.size;
+    this.fieldSize = options.fieldSize;
+    this.mapSize = this.size * this.fieldSize;
     this.foodCollected = 0;
+
+    this.map = new Dawning.Map(this);
   }
 
   preload(){
@@ -119,13 +96,15 @@ class Dawning {
     //this.game.load.audio('jungle', 'audio/Jungle.mp3');
     this.game.load.audio('rainforest', 'audio/rainforest_ambience.mp3');
     this.game.load.audio('footsteps', 'audio/footsteps_dry_wheat.mp3');
+
+    this.map.preload();
   }
 
   create(){
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.world.setBounds(0, 0, 25 * 55, 25 * 55);
 
-    dawning.createFog(22 * 55, 22 *55);
+    dawning.createFog(25 * 55, 25 * 55);
     var background = this.game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '3_grass');
     //background.tint = 0x999999;
     background.alpha = 0.6;
@@ -144,23 +123,7 @@ class Dawning {
     dawning.herbivors = this.game.add.group();
     dawning.herbivors.enableBody = true;
 
-    dawning.loadMap();
-    dawning.map.forEach(function(row, y){
-      row.forEach(function(field, x){
-        if (field == 'x'){
-          dawning.createTree(x, y);
-        } else {
-          dawning.createGrass(x, y);
-          if (field == '1' || field == '2' || field == '3'){
-            dawning.createFruit(x, y, field);
-          } else if(field == 'L') {
-            dawning.createLeopard(x, y);
-          } else if(field == 'R') {
-            dawning.createRabbit(x, y);
-          }
-        }
-      });
-    });
+    dawning.map.create();
 
     dawning.createMan(12, 12);
 
@@ -341,7 +304,7 @@ class Dawning {
 
         this.maskGraphics.drawRect(landingX * 55, landingY * 55, 55, 55);
 
-        if(this.map[landingY][landingX] != 'x'){
+        if(!this.map.isWall(landingY, landingX)){
           lastX = landingX * 55;
           lastY = landingY * 55;
         } else {
@@ -355,8 +318,4 @@ class Dawning {
     return { x: (ax - 22.5) / 55, y: (ay - 22.5) / 55 };
   }
 
-
-
 }
-
-var dawning = new Dawning(800, 600, '#game');
