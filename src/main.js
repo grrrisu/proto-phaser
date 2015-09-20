@@ -1,8 +1,8 @@
-import { DawningGame } from './game';
+import { Dawning } from './namespace';
+import { Map } from './map';
+import { Game } from './game';
 
-var Dawning = {};
-
-var dungeon = new DawningGame(
+Dawning.dungeon = new Dawning.Game(
   {
     width: 800,
     heidht: 600,

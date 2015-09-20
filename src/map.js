@@ -1,4 +1,6 @@
-class DawningMap {
+import { Dawning } from './namespace';
+
+Dawning.Map = class Map {
 
   // legend
   // x : forest
@@ -128,5 +130,3 @@ class DawningMap {
   }
 
 }
-
-export { DawningMap };
