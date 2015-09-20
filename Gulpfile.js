@@ -1,7 +1,4 @@
 var gulp = require("gulp");
-// var sourcemaps = require("gulp-sourcemaps");
-// var babel = require("gulp-babel");
-// var concat = require("gulp-concat");
 
 var browserify = require("browserify");
 var babelify = require("babelify");
@@ -14,21 +11,6 @@ liveReload({
 });
 
 gulp.task('default', ['script']);
-
-// gulp.task("compile_es6", function () {
-//   return gulp.src("src/**/*.js")
-//     .pipe(babel())
-//     .pipe(gulp.dest("javascripts"));
-// });
-//
-// gulp.task("compile_and_unify_es6", function () {
-//   return gulp.src("src/**/*.js")
-//     .pipe(sourcemaps.init())
-//     .pipe(babel())
-//     .pipe(concat("all.js"))
-//     .pipe(sourcemaps.write("."))
-//     .pipe(gulp.dest("javascripts"));
-// });
 
 gulp.task('script', function() {
   var sources = browserify({
