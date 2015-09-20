@@ -1,6 +1,4 @@
-//import { DawningMap } from 'map.es6.js';
-
-Dawning.Game = class Game {
+class DawningGame {
 
   getFogSrc(){
     // form http://glslsandbox.com/e#27661.0
@@ -76,7 +74,7 @@ Dawning.Game = class Game {
     this.mapSize = this.size * this.fieldSize;
     this.foodCollected = 0;
 
-    this.map = new Dawning.Map(this);
+    this.map = new DawningMap(this);
   }
 
   preload(){
@@ -319,3 +317,5 @@ Dawning.Game = class Game {
   }
 
 }
+
+export { DawningGame };

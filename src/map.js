@@ -120,4 +120,4 @@ class DawningMap {
 
 }
 
-//export default DawningMap;
+export { DawningMap };

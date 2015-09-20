@@ -6,7 +6,7 @@ var concat = require("gulp-concat");
 gulp.task('default', ['compile_es6']);
 
 gulp.task("compile_es6", function () {
-  return gulp.src("src/**/*.es6.js")
+  return gulp.src("src/**/*.js")
     .pipe(babel())
     .pipe(gulp.dest("javascripts"));
 });
