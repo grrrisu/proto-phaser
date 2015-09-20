@@ -2,7 +2,7 @@ import { DawningGame } from './game';
 
 var Dawning = {};
 
-var dawning = new DawningGame(
+var dungeon = new DawningGame(
   {
     width: 800,
     heidht: 600,

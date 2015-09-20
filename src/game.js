@@ -75,13 +75,6 @@ class DawningGame {
   }
 
   preload(){
-    this.game.load.image('1_grass', 'images/1_grass@2x.png');
-    this.game.load.image('2_grass', 'images/2_grass@2x.png');
-    this.game.load.image('3_grass', 'images/3_grass@2x.png');
-    this.game.load.image('13_forest', 'images/13_forest@2x.png');
-    this.game.load.image('banana1', 'images/banana-1@2x.png');
-    this.game.load.image('banana2', 'images/banana-2@2x.png');
-    this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('caveman', 'images/caveman.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
     this.game.load.image('rabbit', 'images/rabbit@2x.png');

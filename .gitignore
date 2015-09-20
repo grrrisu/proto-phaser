@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/**/*
+javascripts/app.min.js
 javascripts/all.js
 javascripts/all.js.map
