@@ -1,9 +1,8 @@
-import { DawningMap } from './map';
 import { DawningGame } from './game';
 
 var Dawning = {};
 
-var game = new DawningGame(
+var dawning = new DawningGame(
   {
     width: 800,
     heidht: 600,

@@ -1,3 +1,5 @@
+import { DawningMap } from './map';
+
 class DawningGame {
 
   getFogSrc(){
@@ -62,12 +64,7 @@ class DawningGame {
           options.height,
           Phaser.AUTO,
           options.element,
-          {
-            preload: this.preload,
-            create: this.create,
-            update: this.update,
-            render: this.render
-          }
+          this
     );
     this.size = options.size;
     this.fieldSize = options.fieldSize;
@@ -102,46 +99,46 @@ class DawningGame {
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.world.setBounds(0, 0, 25 * 55, 25 * 55);
 
-    dawning.createFog(25 * 55, 25 * 55);
+    this.createFog(25 * 55, 25 * 55);
     var background = this.game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '3_grass');
     //background.tint = 0x999999;
     background.alpha = 0.6;
 
-    dawning.forest = this.game.add.group();
-    dawning.forest.enableBody = true;
+    this.forest = this.game.add.group();
+    this.forest.enableBody = true;
 
-    dawning.ground = this.game.add.group();
+    this.ground = this.game.add.group();
 
-    dawning.fruits = this.game.add.group();
-    dawning.fruits.enableBody = true;
+    this.fruits = this.game.add.group();
+    this.fruits.enableBody = true;
 
-    dawning.predators = this.game.add.group();
-    dawning.predators.enableBody = true;
+    this.predators = this.game.add.group();
+    this.predators.enableBody = true;
 
-    dawning.herbivors = this.game.add.group();
-    dawning.herbivors.enableBody = true;
+    this.herbivors = this.game.add.group();
+    this.herbivors.enableBody = true;
 
-    dawning.map.create();
+    this.map.create();
 
-    dawning.createMan(12, 12);
+    this.createMan(12, 12);
 
-    dawning.cursors = this.game.input.keyboard.createCursorKeys();
-    this.game.camera.follow(dawning.man);
+    this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.game.camera.follow(this.man);
 
-    dawning.foodScore = this.game.add.text(0, 0, "Food: 0", { font: "32px Arial", fill: "#ffffff", align: "center" });
-    dawning.foodScore.fixedToCamera = true;
+    this.foodScore = this.game.add.text(0, 0, "Food: 0", { font: "32px Arial", fill: "#ffffff", align: "center" });
+    this.foodScore.fixedToCamera = true;
 
     var backgroundSound = this.game.add.audio('rainforest', 0.1, true); // key, volume, loop
     var footstepsSound  = this.game.add.audio('footsteps', 1.0,  true);
     backgroundSound.play();
 
-    dawning.maskGraphics = this.game.add.graphics(0, 0);
-    dawning.rayCast();
-    //dawning.forest.mask = dawning.maskGraphics;
-    dawning.ground.mask = dawning.maskGraphics;
-    dawning.fruits.mask = dawning.maskGraphics;
-    dawning.predators.mask = dawning.maskGraphics;
-    dawning.herbivors.mask = dawning.maskGraphics;
+    this.maskGraphics = this.game.add.graphics(0, 0);
+    this.rayCast();
+    //this.forest.mask = this.maskGraphics;
+    this.ground.mask = this.maskGraphics;
+    this.fruits.mask = this.maskGraphics;
+    this.predators.mask = this.maskGraphics;
+    this.herbivors.mask = this.maskGraphics;
   }
 
   createFog(width, height){
@@ -224,31 +221,31 @@ class DawningGame {
   }
 
   update(){
-    dawning.collisionDetection();
+    this.collisionDetection();
 
     var speed = 150
-    dawning.man.body.velocity.x = 0;
-    dawning.man.body.velocity.y = 0;
+    this.man.body.velocity.x = 0;
+    this.man.body.velocity.y = 0;
 
-    if (dawning.cursors.left.isDown) {
-        dawning.man.body.velocity.x = -speed;
-        dawning.man.animations.play('left');
-        dawning.rayCast();
-    } else if (dawning.cursors.right.isDown) {
-        dawning.man.body.velocity.x = speed;
-        dawning.man.animations.play('right');
-        dawning.rayCast();
-    } else if (dawning.cursors.down.isDown) {
-        dawning.man.body.velocity.y = speed;
-        dawning.man.animations.play('right');
-        dawning.rayCast();
-    } else if (dawning.cursors.up.isDown) {
-        dawning.man.body.velocity.y = -speed;
-        dawning.man.animations.play('right');
-        dawning.rayCast();
+    if (this.cursors.left.isDown) {
+        this.man.body.velocity.x = -speed;
+        this.man.animations.play('left');
+        this.rayCast();
+    } else if (this.cursors.right.isDown) {
+        this.man.body.velocity.x = speed;
+        this.man.animations.play('right');
+        this.rayCast();
+    } else if (this.cursors.down.isDown) {
+        this.man.body.velocity.y = speed;
+        this.man.animations.play('right');
+        this.rayCast();
+    } else if (this.cursors.up.isDown) {
+        this.man.body.velocity.y = -speed;
+        this.man.animations.play('right');
+        this.rayCast();
     }
 
-    dawning.fogFilter.update();
+    this.fogFilter.update();
   }
 
   collisionDetection(){
@@ -302,7 +299,7 @@ class DawningGame {
 
         this.maskGraphics.drawRect(landingX * 55, landingY * 55, 55, 55);
 
-        if(!this.map.isWall(landingY, landingX)){
+        if(!this.map.isWall(landingX, landingY)){
           lastX = landingX * 55;
           lastY = landingY * 55;
         } else {

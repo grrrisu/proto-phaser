@@ -92,12 +92,12 @@ class DawningMap {
   }
 
   preload(){
-    this.data = loadData3();
+    this.data = this.loadData3();
   }
 
   create(){
-    this.data.forEach(function(row, y){
-      row.forEach(function(field, x){
+    this.data.forEach((row, y) => {
+      row.forEach((field, x) => {
         if (field == 'x'){
           this.dawning.createTree(x, y);
         } else {

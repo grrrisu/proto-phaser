@@ -21,10 +21,11 @@
   },
   "homepage": "https://github.com/grrrisu/proto-phaser#readme",
   "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.1.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
-    "gulp-concat": "^2.6.0",
-    "gulp-sourcemaps": "^1.5.2"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
     "require": "^2.4.20"
