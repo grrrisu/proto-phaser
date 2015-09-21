@@ -1,4 +1,5 @@
 import { Dawning } from './namespace';
+import { Pawn } from './pawn';
 import { Map } from './map';
 import { Game } from './game';
 

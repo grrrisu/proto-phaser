@@ -75,7 +75,6 @@ Dawning.Game = class Game {
   }
 
   preload(){
-    this.game.load.image('caveman', 'images/caveman.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
     this.game.load.image('rabbit', 'images/rabbit@2x.png');
 
@@ -97,26 +96,7 @@ Dawning.Game = class Game {
     //background.tint = 0x999999;
     background.alpha = 0.6;
 
-    this.forest = this.game.add.group();
-    this.forest.enableBody = true;
-
-    this.ground = this.game.add.group();
-
-    this.fruits = this.game.add.group();
-    this.fruits.enableBody = true;
-
-    this.predators = this.game.add.group();
-    this.predators.enableBody = true;
-
-    this.herbivors = this.game.add.group();
-    this.herbivors.enableBody = true;
-
     this.map.create();
-
-    this.createMan(12, 12);
-
-    this.cursors = this.game.input.keyboard.createCursorKeys();
-    this.game.camera.follow(this.man);
 
     this.foodScore = this.game.add.text(0, 0, "Food: 0", { font: "32px Arial", fill: "#ffffff", align: "center" });
     this.foodScore.fixedToCamera = true;
@@ -124,14 +104,6 @@ Dawning.Game = class Game {
     var backgroundSound = this.game.add.audio('rainforest', 0.1, true); // key, volume, loop
     var footstepsSound  = this.game.add.audio('footsteps', 1.0,  true);
     backgroundSound.play();
-
-    this.maskGraphics = this.game.add.graphics(0, 0);
-    this.rayCast();
-    //this.forest.mask = this.maskGraphics;
-    this.ground.mask = this.maskGraphics;
-    this.fruits.mask = this.maskGraphics;
-    this.predators.mask = this.maskGraphics;
-    this.herbivors.mask = this.maskGraphics;
   }
 
   createFog(width, height){
@@ -145,107 +117,9 @@ Dawning.Game = class Game {
     fog.filters = [ this.fogFilter ];
   }
 
-  createTree(x, y){
-    var tree = this.forest.create(x * 55, y * 55, '13_forest');
-    tree.scale.setTo(0.5);
-    tree.body.immovable = true;
-  }
-
-  createGrass(x, y){
-    var grass = this.ground.create(x * 55, y * 55, '3_grass');
-    grass.scale.setTo(0.5);
-  }
-
-  createLeopard(x, y){
-    var leopard = this.predators.create(x * 55 + 22.5, y * 55 + 22.5, 'leopard');
-    leopard.anchor.set(0.5);
-    leopard.scale.setTo(0.5);
-  }
-
-  createRabbit(x, y){
-    var rabbit = this.herbivors.create(x * 55 + 22.5, y * 55 + 22.5, 'rabbit');
-    rabbit.scale.setTo(0.5);
-    rabbit.anchor.set(0.5);
-    this.assignRabbitMovement(rabbit);
-  }
-
-  assignRabbitMovement(rabbit){
-    var d = 2;
-    var direction = this.game.rnd.integerInRange(0,1);
-    var rpos = this.relativePosition(rabbit.x, rabbit.y);
-    var targetX, targetY;
-    if(direction == 0) {
-      targetX = this.game.rnd.integerInRange(rpos.x - d, rpos.x + d) * 55 + 22.5;
-      if(targetX < rabbit.x){
-        rabbit.scale.x = -0.5;
-      } else if (targetX > rabbit.x){
-        rabbit.scale.x = 0.5;
-      }
-      targetY = rabbit.y;
-    } else {
-      targetY = this.game.rnd.integerInRange(rpos.y - d, rpos.y + d) * 55 + 22.5;
-      targetX = rabbit.x;
-    }
-
-    var delay = this.game.rnd.integerInRange(2000, 6000);
-    var tween = this.game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
-    tween.onStart.add(this.startRabbit, this);
-    tween.onComplete.add(this.stopRabbit, this);
-  }
-
-  startRabbit(rabbit){
-    //rabbit.animations.stop('Play');
-    //rabbit.animations.play('Walk', 24, true);
-  }
-
-  stopRabbit(rabbit) {
-    this.assignRabbitMovement(rabbit);
-  }
-
-  createMan(x, y) {
-    this.man = this.game.add.sprite(x * 55 + 25, y * 55 + 30, 'caveman');
-    this.man.anchor.setTo(0.5);
-    this.game.physics.arcade.enable(this.man);
-  }
-
-  createFruit(x, y, type) {
-    var fruit = this.fruits.create(x * 55, y * 55, 'banana'+type);
-    fruit.scale.setTo(0.5);
-  }
-
   update(){
-    this.collisionDetection();
-
-    var speed = 150
-    this.man.body.velocity.x = 0;
-    this.man.body.velocity.y = 0;
-
-    if (this.cursors.left.isDown) {
-        this.man.body.velocity.x = -speed;
-        this.man.animations.play('left');
-        this.rayCast();
-    } else if (this.cursors.right.isDown) {
-        this.man.body.velocity.x = speed;
-        this.man.animations.play('right');
-        this.rayCast();
-    } else if (this.cursors.down.isDown) {
-        this.man.body.velocity.y = speed;
-        this.man.animations.play('right');
-        this.rayCast();
-    } else if (this.cursors.up.isDown) {
-        this.man.body.velocity.y = -speed;
-        this.man.animations.play('right');
-        this.rayCast();
-    }
-
     this.fogFilter.update();
-  }
-
-  collisionDetection(){
-    this.game.physics.arcade.collide(this.man, this.forest);
-
-    this.game.physics.arcade.overlap(this.man, this.fruits, this.collectBanana, null, this);
-    this.game.physics.arcade.overlap(this.man, this.predators, this.attacked, null, this);
+    this.map.update();
   }
 
   collectBanana(man, banana) {
@@ -271,39 +145,6 @@ Dawning.Game = class Game {
   incFood(amount){
     this.foodCollected += amount;
     this.foodScore.text = 'Food: ' + this.foodCollected;
-  }
-
-  rayCast() {
-    this.maskGraphics.clear();
-    //this.maskGraphics.lineStyle(2, 0xffffff, 1);
-    this.maskGraphics.beginFill(0x000000);
-    var numberOfRays = 96;
-    var rayLength = 5;
-    var rpos = this.relativePosition(this.man.x, this.man.y);
-
-    for(var i = 0; i < numberOfRays; i++){
-      //this.maskGraphics.moveTo(man.x, man.y);
-      var rayAngle = (Math.PI * 2 / numberOfRays) * i
-      var lastX = this.man.x;
-      var lastY = this.man.y;
-      for(var j= 0; j <= rayLength; j+=1){
-        var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
-        var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
-
-        this.maskGraphics.drawRect(landingX * 55, landingY * 55, 55, 55);
-
-        if(!this.map.isWall(landingX, landingY)){
-          lastX = landingX * 55;
-          lastY = landingY * 55;
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
-  relativePosition(ax, ay){
-    return { x: (ax - 22.5) / 55, y: (ay - 22.5) / 55 };
   }
 
 }
