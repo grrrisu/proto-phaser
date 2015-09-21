@@ -2,17 +2,15 @@ var gulp = require("gulp");
 
 var browserify = require("browserify");
 var babelify = require("babelify");
+var uglify = require("gulp-uglify");
+var gzip = require('gulp-gzip');
 var vinylSourceStream = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
 var liveReload = require("gulp-livereload");
 
-liveReload({
-  start: true
-});
+gulp.task('default', ['watch']);
 
-gulp.task('default', ['script']);
-
-gulp.task('script', function() {
+gulp.task('compile', function() {
   var sources = browserify({
     entries: 'src/main.js',
     debug: true
@@ -22,9 +20,26 @@ gulp.task('script', function() {
   return sources.bundle()
     .pipe(vinylSourceStream('app.min.js'))
     .pipe(vinylBuffer())
-    // Do stuff to the output file
     .pipe(gulp.dest('javascripts/'))
     .pipe(liveReload());
 });
 
-gulp.watch("src/**/*.js", ["script"]);
+gulp.task('production', function() {
+  var sources = browserify({
+    entries: 'src/main.js',
+    debug: true
+  })
+  .transform(babelify.configure());
+
+  return sources.bundle()
+    .pipe(vinylSourceStream('app.min.js'))
+    .pipe(vinylBuffer())
+    .pipe(uglify())
+    .pipe(gzip())
+    .pipe(gulp.dest('javascripts/'))
+});
+
+gulp.task('watch', ['compile'], function(){
+  liveReload({start: true});
+  gulp.watch("src/**/*.js", ["compile"]);
+});
