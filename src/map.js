@@ -103,6 +103,8 @@ Dawning.Map = class Map {
     this.game.load.image('banana1', 'images/banana-1@2x.png');
     this.game.load.image('banana2', 'images/banana-2@2x.png');
     this.game.load.image('banana3', 'images/banana-3@2x.png');
+    this.game.load.image('leopard', 'images/leopard@2x.png');
+    this.game.load.image('rabbit', 'images/rabbit@2x.png');
     this.data = this.loadData3();
     this.pawn.preload();
   }

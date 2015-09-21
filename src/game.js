@@ -20,9 +20,6 @@ Dawning.Game = class Game {
   }
 
   preload(){
-    this.game.load.image('leopard', 'images/leopard@2x.png');
-    this.game.load.image('rabbit', 'images/rabbit@2x.png');
-
     //this.game.load.audio('rainforest', 'audio/Rainforest.mp3');
     //this.game.load.audio('birds', 'audio/Birds_In_Forest.mp3');
     //this.game.load.audio('jungle', 'audio/Jungle.mp3');
