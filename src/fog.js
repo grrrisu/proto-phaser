@@ -2,6 +2,37 @@ import { Dawning } from './namespace';
 
 Dawning.Fog = class Fog {
 
+  constructor(dawning, mapSize){
+    this.dawning = dawning;
+    this.game = dawning.game;
+    this.mapSize = mapSize;
+  }
+
+  preload(){
+  }
+
+  create(){
+    this.createFog(this.mapSize, this.mapSize);
+    var background = this.game.add.tileSprite(0, 0, this.mapSize, this.mapSize, '3_grass');
+    //background.tint = 0x999999;
+    background.alpha = 0.6;
+  }
+
+  createFog(width, height){
+    this.fogFilter = new Phaser.Filter(this.game, null, this.getFogSrc());
+    this.fogFilter.setResolution(800, 600);
+
+    var fog = this.game.add.sprite();
+    fog.width = width;
+    fog.height = height;
+    fog.alpha = 0.1;
+    fog.filters = [ this.fogFilter ];
+  }
+
+  update(){
+    this.fogFilter.update();
+  }
+
   getFogSrc(){
     // form http://glslsandbox.com/e#27661.0
     return [
@@ -56,36 +87,6 @@ Dawning.Fog = class Fog {
         "gl_FragColor = vec4(vec3(n), 1.0);",
       "}"
     ]
-  }
-
-  constructor(dawning){
-    this.dawning = dawning;
-    this.game = dawning.game;
-  }
-
-  preload(){
-  }
-
-  create(){
-    this.createFog(25 * 55, 25 * 55);
-    var background = this.game.add.tileSprite(0, 0, 25 * 55, 25 * 55, '3_grass');
-    //background.tint = 0x999999;
-    background.alpha = 0.6;
-  }
-
-  createFog(width, height){
-    this.fogFilter = new Phaser.Filter(this.game, null, this.getFogSrc());
-    this.fogFilter.setResolution(800, 600);
-
-    var fog = this.game.add.sprite();
-    fog.width = width;
-    fog.height = height;
-    fog.alpha = 0.1;
-    fog.filters = [ this.fogFilter ];
-  }
-
-  update(){
-    this.fogFilter.update();
   }
 
 }

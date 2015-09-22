@@ -10,19 +10,12 @@ Dawning.Game = class Game {
           options.element,
           this
     );
-    this.size = options.size;
-    this.fieldSize = options.fieldSize;
-    this.mapSize = this.size * this.fieldSize;
     this.foodCollected = 0;
-
-    this.map = new Dawning.Map(this);
-    this.fog = new Dawning.Fog(this);
+    this.map = new Dawning.Map(this, options);
+    this.fog = new Dawning.Fog(this, this.map.mapSize);
   }
 
   preload(){
-    //this.game.load.audio('rainforest', 'audio/Rainforest.mp3');
-    //this.game.load.audio('birds', 'audio/Birds_In_Forest.mp3');
-    //this.game.load.audio('jungle', 'audio/Jungle.mp3');
     this.game.load.audio('rainforest', 'audio/rainforest_ambience.mp3');
     this.game.load.audio('footsteps', 'audio/footsteps_dry_wheat.mp3');
 
@@ -31,7 +24,7 @@ Dawning.Game = class Game {
 
   create(){
     this.game.physics.startSystem(Phaser.Physics.P2JS);
-    this.game.world.setBounds(0, 0, 25 * 55, 25 * 55);
+    this.game.world.setBounds(0, 0, this.map.mapSize, this.map.mapSize);
 
     this.fog.create();
     this.map.create();

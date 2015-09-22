@@ -89,9 +89,13 @@ Dawning.Map = class Map {
     ];
   }
 
-  constructor(dawning){
+  constructor(dawning, options){
     this.dawning = dawning;
     this.game = dawning.game;
+    this.size = options.size;
+    this.fieldSize = options.fieldSize;
+    this.halfFieldSize = this.fieldSize / 2;
+    this.mapSize = this.size * this.fieldSize;
     this.pawn = new Dawning.Pawn(this);
     this.rabbitBuilder = new Dawning.Rabbit(this);
   }
@@ -156,24 +160,24 @@ Dawning.Map = class Map {
   }
 
   createTree(x, y){
-    var tree = this.forest.create(x * 55, y * 55, '13_forest');
+    var tree = this.forest.create(x * this.fieldSize, y * this.fieldSize, '13_forest');
     tree.scale.setTo(0.5);
     tree.body.immovable = true;
   }
 
   createGrass(x, y){
-    var grass = this.ground.create(x * 55, y * 55, '3_grass');
+    var grass = this.ground.create(x * this.fieldSize, y * this.fieldSize, '3_grass');
     grass.scale.setTo(0.5);
   }
 
   createLeopard(x, y){
-    var leopard = this.predators.create(x * 55 + 22.5, y * 55 + 22.5, 'leopard');
+    var leopard = this.predators.create(x * this.fieldSize + this.halfFieldSize, y * this.fieldSize + this.halfFieldSize, 'leopard');
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
   }
 
   createFruit(x, y, type) {
-    var fruit = this.fruits.create(x * 55, y * 55, 'banana'+type);
+    var fruit = this.fruits.create(x * this.fieldSize, y * this.fieldSize, 'banana'+type);
     fruit.scale.setTo(0.5);
   }
 
@@ -195,7 +199,7 @@ Dawning.Map = class Map {
   }
 
   relativePosition(ax, ay){
-    return { x: (ax - 22.5) / 55, y: (ay - 22.5) / 55 };
+    return { x: (ax - this.halfFieldSize) / this.fieldSize, y: (ay - this.halfFieldSize) / this.fieldSize };
   }
 
 }

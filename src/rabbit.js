@@ -12,7 +12,7 @@ Dawning.Rabbit = class Rabbit {
   }
 
   createRabbit(group, x, y){
-    var rabbit = group.create(x * 55 + 22.5, y * 55 + 22.5, 'rabbit');
+    var rabbit = group.create(x * this.map.fieldSize + this.map.halfFieldSize, y * this.map.fieldSize + this.map.halfFieldSize, 'rabbit');
     rabbit.scale.setTo(0.5);
     rabbit.anchor.set(0.5);
     this.assignRabbitMovement(rabbit);
@@ -24,7 +24,7 @@ Dawning.Rabbit = class Rabbit {
     var rpos = this.map.relativePosition(rabbit.x, rabbit.y);
     var targetX, targetY;
     if(direction == 0) {
-      targetX = this.game.rnd.integerInRange(rpos.x - d, rpos.x + d) * 55 + 22.5;
+      targetX = this.game.rnd.integerInRange(rpos.x - d, rpos.x + d) * this.map.fieldSize + this.map.halfFieldSize;
       if(targetX < rabbit.x){
         rabbit.scale.x = -0.5;
       } else if (targetX > rabbit.x){
@@ -32,7 +32,7 @@ Dawning.Rabbit = class Rabbit {
       }
       targetY = rabbit.y;
     } else {
-      targetY = this.game.rnd.integerInRange(rpos.y - d, rpos.y + d) * 55 + 22.5;
+      targetY = this.game.rnd.integerInRange(rpos.y - d, rpos.y + d) * this.map.fieldSize + this.map.halfFieldSize;
       targetX = rabbit.x;
     }
 

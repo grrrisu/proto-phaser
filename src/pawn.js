@@ -12,11 +12,11 @@ Dawning.Pawn = class Pawn {
   }
 
   moveTo(x, y){
-    this.man.moveTo(x * 55 + 25, y * 55 + 30);
+    this.man.moveTo(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30);
   }
 
   createMan(x, y) {
-    this.man = this.game.add.sprite(x * 55 + 25, y * 55 + 30, 'caveman');
+    this.man = this.game.add.sprite(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30, 'caveman');
     this.man.anchor.setTo(0.5);
     this.game.physics.arcade.enable(this.man);
 
@@ -30,7 +30,7 @@ Dawning.Pawn = class Pawn {
     var speed = 150
     this.man.body.velocity.x = 0;
     this.man.body.velocity.y = 0;
-    
+
     if (this.cursors.left.isDown) {
         this.man.body.velocity.x = -speed;
         this.man.animations.play('left');
@@ -67,11 +67,11 @@ Dawning.Pawn = class Pawn {
         var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
         var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
 
-        this.map.maskGraphics.drawRect(landingX * 55, landingY * 55, 55, 55);
+        this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
 
         if(!this.map.isWall(landingX, landingY)){
-          lastX = landingX * 55;
-          lastY = landingY * 55;
+          lastX = landingX * this.map.fieldSize;
+          lastY = landingY * this.map.fieldSize;
         } else {
           break;
         }
