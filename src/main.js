@@ -1,6 +1,7 @@
 import { Dawning } from './namespace';
 import { Fog } from './fog';
 import { Pawn } from './pawn';
+import { Rabbit } from './rabbit';
 import { Map } from './map';
 import { Game } from './game';
 

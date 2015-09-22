@@ -93,6 +93,7 @@ Dawning.Map = class Map {
     this.dawning = dawning;
     this.game = dawning.game;
     this.pawn = new Dawning.Pawn(this);
+    this.rabbitBuilder = new Dawning.Rabbit(this);
   }
 
   preload(){
@@ -104,9 +105,9 @@ Dawning.Map = class Map {
     this.game.load.image('banana2', 'images/banana-2@2x.png');
     this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
-    this.game.load.image('rabbit', 'images/rabbit@2x.png');
     this.data = this.loadData3();
     this.pawn.preload();
+    this.rabbitBuilder.preload();
   }
 
   create(){
@@ -147,7 +148,7 @@ Dawning.Map = class Map {
           } else if(field == 'L') {
             this.createLeopard(x, y);
           } else if(field == 'R') {
-            this.createRabbit(x, y);
+            this.rabbitBuilder.createRabbit(this.herbivors, x, y);
           }
         }
       });
@@ -169,46 +170,6 @@ Dawning.Map = class Map {
     var leopard = this.predators.create(x * 55 + 22.5, y * 55 + 22.5, 'leopard');
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
-  }
-
-  createRabbit(x, y){
-    var rabbit = this.herbivors.create(x * 55 + 22.5, y * 55 + 22.5, 'rabbit');
-    rabbit.scale.setTo(0.5);
-    rabbit.anchor.set(0.5);
-    this.assignRabbitMovement(rabbit);
-  }
-
-  assignRabbitMovement(rabbit){
-    var d = 2;
-    var direction = this.game.rnd.integerInRange(0,1);
-    var rpos = this.relativePosition(rabbit.x, rabbit.y);
-    var targetX, targetY;
-    if(direction == 0) {
-      targetX = this.game.rnd.integerInRange(rpos.x - d, rpos.x + d) * 55 + 22.5;
-      if(targetX < rabbit.x){
-        rabbit.scale.x = -0.5;
-      } else if (targetX > rabbit.x){
-        rabbit.scale.x = 0.5;
-      }
-      targetY = rabbit.y;
-    } else {
-      targetY = this.game.rnd.integerInRange(rpos.y - d, rpos.y + d) * 55 + 22.5;
-      targetX = rabbit.x;
-    }
-
-    var delay = this.game.rnd.integerInRange(2000, 6000);
-    var tween = this.game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
-    tween.onStart.add(this.startRabbit, this);
-    tween.onComplete.add(this.stopRabbit, this);
-  }
-
-  startRabbit(rabbit){
-    //rabbit.animations.stop('Play');
-    //rabbit.animations.play('Walk', 24, true);
-  }
-
-  stopRabbit(rabbit) {
-    this.assignRabbitMovement(rabbit);
   }
 
   createFruit(x, y, type) {
