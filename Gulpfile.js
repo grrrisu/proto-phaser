@@ -2,6 +2,7 @@ var gulp = require("gulp");
 
 var browserify = require("browserify");
 var babelify = require("babelify");
+var rev = require("gulp-rev");
 var uglify = require("gulp-uglify");
 var gzip = require('gulp-gzip');
 var vinylSourceStream = require('vinyl-source-stream');
@@ -18,7 +19,7 @@ gulp.task('compile', function() {
   .transform(babelify.configure());
 
   return sources.bundle()
-    .pipe(vinylSourceStream('app.min.js'))
+    .pipe(vinylSourceStream('app.js'))
     .pipe(vinylBuffer())
     .pipe(gulp.dest('javascripts/'))
     .pipe(liveReload());
@@ -35,7 +36,11 @@ gulp.task('production', function() {
     .pipe(vinylSourceStream('app.min.js'))
     .pipe(vinylBuffer())
     .pipe(uglify())
+    .pipe(rev())
+    .pipe(gulp.dest('javascripts/'))
     .pipe(gzip())
+    .pipe(gulp.dest('javascripts/'))
+    .pipe(rev.manifest())
     .pipe(gulp.dest('javascripts/'))
 });
 
