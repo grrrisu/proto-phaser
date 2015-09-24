@@ -5,12 +5,19 @@ Phaser
 
 Version 2.4.3
 
-Preparation
+Installation
 -----------
 
 ```
-npm install -g http-server
+npm install
 ```
+
+Development
+-----------
+
+```
+gulp
+``
 
 Run
 ---
