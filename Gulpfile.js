@@ -33,7 +33,7 @@ gulp.task('production', function() {
   .transform(babelify.configure());
 
   return sources.bundle()
-    .pipe(vinylSourceStream('app.min.js'))
+    .pipe(vinylSourceStream('app.js'))
     .pipe(vinylBuffer())
     .pipe(uglify())
     .pipe(rev())

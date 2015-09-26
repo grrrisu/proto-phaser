@@ -98,7 +98,7 @@ Dawning.Map = class Map {
     this.mapSize = this.size * this.fieldSize;
     this.pawn = new Dawning.Pawn(this);
     this.rabbitBuilder = new Dawning.Rabbit(this);
-    this.inputHandler = new Dawning.inputHandler(this);
+    this.inputHandler = new Dawning.InputHandler(this);
   }
 
   preload(){
@@ -191,7 +191,7 @@ Dawning.Map = class Map {
 
   update(){
     this.collisionDetection();
-    this.inputHandler.moveWithCursor(this.man.man);
+    this.inputHandler.moveWithCursor(this.man);
   }
 
   collisionDetection(){

@@ -1,4 +1,5 @@
 import { Dawning } from './namespace';
+import { InputHandler} from './inputHandler';
 import { Fog } from './fog';
 import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
