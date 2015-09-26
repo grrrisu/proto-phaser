@@ -42,6 +42,27 @@ Dawning.Rabbit = class Rabbit {
     tween.onComplete.add(this.stopRabbit, this);
   }
 
+  newXPos(currentX, d){
+    var delta = this.game.rnd.integerInRange(1, d);
+
+    for(var i = 0; i <= delta; i++){
+      if(this.map.isWall(x + i, y)){
+        return newX;
+      }
+      newX = x + i;
+    }
+    return newX;
+
+    for(var i = 0; i >= delta; i--){
+      if(this.map.isWall(x - i, y)){
+        return newX;
+      }
+      newX = x - i;
+    }
+    return newX;
+
+  }
+
   startRabbit(rabbit){
     //rabbit.animations.stop('Play');
     //rabbit.animations.play('Walk', 24, true);
