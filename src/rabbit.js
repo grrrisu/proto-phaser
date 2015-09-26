@@ -21,10 +21,14 @@ Dawning.Rabbit = class Rabbit {
   assignRabbitMovement(rabbit){
     var d = 2;
     var direction = this.game.rnd.integerInRange(0,1);
+    var delta = this.game.rnd.integerInRange(-3, 3);
     var rpos = this.map.relativePosition(rabbit.x, rabbit.y);
     var targetX, targetY;
     if(direction == 0) {
-      targetX = this.game.rnd.integerInRange(rpos.x - d, rpos.x + d) * this.map.fieldSize + this.map.halfFieldSize;
+      var newX = this.checkFields(rpos.x, delta, (newX) => {
+        return this.map.isWall(newX, rpos.y);
+      });
+      targetX = newX * this.map.fieldSize + this.map.halfFieldSize;
       if(targetX < rabbit.x){
         rabbit.scale.x = -0.5;
       } else if (targetX > rabbit.x){
@@ -32,7 +36,10 @@ Dawning.Rabbit = class Rabbit {
       }
       targetY = rabbit.y;
     } else {
-      targetY = this.game.rnd.integerInRange(rpos.y - d, rpos.y + d) * this.map.fieldSize + this.map.halfFieldSize;
+      var newY = this.checkFields(rpos.y, delta, (newY) => {
+        return this.map.isWall(rpos.x, newY);
+      });
+      targetY = newY * this.map.fieldSize + this.map.halfFieldSize;
       targetX = rabbit.x;
     }
 
@@ -42,25 +49,16 @@ Dawning.Rabbit = class Rabbit {
     tween.onComplete.add(this.stopRabbit, this);
   }
 
-  newXPos(currentX, d){
-    var delta = this.game.rnd.integerInRange(1, d);
-
-    for(var i = 0; i <= delta; i++){
-      if(this.map.isWall(x + i, y)){
-        return newX;
+  checkFields(pos, target, stopCondition){
+    var currentPos = pos
+    for(var i = 0; i <= Math.abs(target); i++){
+      var step = target > 0 ? i : -i;
+      if(stopCondition(pos + step)){
+        return currentPos;
       }
-      newX = x + i;
+      currentPos = pos + step;
     }
-    return newX;
-
-    for(var i = 0; i >= delta; i--){
-      if(this.map.isWall(x - i, y)){
-        return newX;
-      }
-      newX = x - i;
-    }
-    return newX;
-
+    return currentPos;
   }
 
   startRabbit(rabbit){
