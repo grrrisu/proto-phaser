@@ -19,7 +19,6 @@ Dawning.Rabbit = class Rabbit {
   }
 
   assignRabbitMovement(rabbit){
-    var d = 2;
     var direction = this.game.rnd.integerInRange(0,1);
     var delta = this.game.rnd.integerInRange(-3, 3);
     var rpos = this.map.relativePosition(rabbit.x, rabbit.y);

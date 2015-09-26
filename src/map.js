@@ -202,7 +202,10 @@ Dawning.Map = class Map {
   }
 
   relativePosition(ax, ay){
-    return { x: (ax - this.halfFieldSize) / this.fieldSize, y: (ay - this.halfFieldSize) / this.fieldSize };
+    return {
+      x: Math.round((ax - this.halfFieldSize) / this.fieldSize),
+      y: Math.round((ay - this.halfFieldSize) / this.fieldSize)
+    };
   }
 
 }
