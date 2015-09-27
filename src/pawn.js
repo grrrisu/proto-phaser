@@ -8,7 +8,7 @@ Dawning.Pawn = class Pawn {
   }
 
   preload(){
-    this.game.load.image('caveman', 'images/caveman.png');
+    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
   }
 
   moveTo(x, y){
@@ -16,8 +16,12 @@ Dawning.Pawn = class Pawn {
   }
 
   createMan(x, y) {
-    this.man = this.game.add.sprite(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30, 'caveman');
+    this.man = this.game.add.sprite(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30, 'pawn', 0);
     this.man.anchor.setTo(0.5);
+
+    this.man.animations.add('standing', [0], 5, false, true);
+    this.man.animations.add('walk', [1,2,3,4], 5, true, true);
+    
     this.game.physics.arcade.enable(this.man);
 
     this.game.camera.follow(this.man);

@@ -15,7 +15,6 @@ Dawning.InputHandler = class InputHandler {
   positionChanged(pawn){
     var rpos = this.map.relativePosition(pawn.man.x, pawn.man.y);
     if (this.currentPos.x != rpos.x || this.currentPos.y != rpos.y){
-      console.log(rpos)
       pawn.rayCast();
       this.currentPos = {x: rpos.x, y: rpos.y};
     }
@@ -27,21 +26,26 @@ Dawning.InputHandler = class InputHandler {
     pawn.man.body.velocity.y = 0;
 
     if (this.cursors.left.isDown) {
-        pawn.man.body.velocity.x = -speed;
-        pawn.man.animations.play('left');
-        this.positionChanged(pawn);
+      pawn.man.body.velocity.x = -speed;
+      pawn.man.animations.play('walk');
+      pawn.man.scale.x = -1;
+      this.positionChanged(pawn);
     } else if (this.cursors.right.isDown) {
-        pawn.man.body.velocity.x = speed;
-        pawn.man.animations.play('right');
-        this.positionChanged(pawn);
+      pawn.man.body.velocity.x = speed;
+      pawn.man.animations.play('walk');
+      pawn.man.scale.x = 1;
+      this.positionChanged(pawn);
     } else if (this.cursors.down.isDown) {
-        pawn.man.body.velocity.y = speed;
-        pawn.man.animations.play('right');
-        this.positionChanged(pawn);
+      pawn.man.body.velocity.y = speed;
+      pawn.man.animations.play('walk');
+      this.positionChanged(pawn);
     } else if (this.cursors.up.isDown) {
-        pawn.man.body.velocity.y = -speed;
-        pawn.man.animations.play('right');
-        this.positionChanged(pawn);
+      pawn.man.body.velocity.y = -speed;
+      pawn.man.animations.play('walk');
+      this.positionChanged(pawn);
+    } else {
+      //pawn.man.animations.stop('walk');
+      pawn.man.animations.play('standing');
     }
   }
 
