@@ -1,52 +1,75 @@
 {"frames": {
 
-"Standing.png":
+"pawn/Standing.png":
 {
 	"frame": {"x":2,"y":2,"w":23,"h":47},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":2,"w":23,"h":47},
-	"sourceSize": {"w":25,"h":50}
+	"sourceSize": {"w":25,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
 },
-"Walk1.png":
+"pawn/Walk1.png":
 {
-	"frame": {"x":2,"y":51,"w":24,"h":48},
+	"frame": {"x":27,"y":2,"w":24,"h":48},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":2,"w":24,"h":48},
-	"sourceSize": {"w":24,"h":50}
+	"sourceSize": {"w":24,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
 },
-"Walk2.png":
+"pawn/Walk2.png":
 {
-	"frame": {"x":2,"y":101,"w":24,"h":49},
+	"frame": {"x":53,"y":2,"w":24,"h":49},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":1,"w":24,"h":49},
-	"sourceSize": {"w":26,"h":50}
+	"sourceSize": {"w":26,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
 },
-"Walk3.png":
+"pawn/Walk3.png":
 {
-	"frame": {"x":2,"y":152,"w":27,"h":48},
+	"frame": {"x":79,"y":2,"w":27,"h":48},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":2,"w":27,"h":48},
-	"sourceSize": {"w":27,"h":50}
+	"sourceSize": {"w":27,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
 },
-"Walk4.png":
+"pawn/Walk4.png":
 {
-	"frame": {"x":2,"y":202,"w":23,"h":49},
+	"frame": {"x":108,"y":2,"w":23,"h":49},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":1,"w":23,"h":49},
-	"sourceSize": {"w":25,"h":50}
+	"sourceSize": {"w":25,"h":50},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"tree/tree.png":
+{
+	"frame": {"x":133,"y":2,"w":55,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":55,"h":55},
+	"sourceSize": {"w":55,"h":55},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"tree/tree_top.png":
+{
+	"frame": {"x":190,"y":2,"w":55,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":55,"h":21},
+	"sourceSize": {"w":55,"h":21},
+	"pivot": {"x":0.5,"y":0.5}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "pawn.png",
 	"format": "RGBA8888",
-	"size": {"w":31,"h":253},
+	"size": {"w":247,"h":59},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:ab5b37b10b48c5517ad2bb9115608cf0:a80f317aae209145aa0ea325bc50b8dc:2c8d0753c9d80f8d641aff94bf8f904d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5f00bc563375aa44eaf92e9e1b71e464:cf39242cd8ac993b830f6035de65b8af:2c8d0753c9d80f8d641aff94bf8f904d$"
 }
 }

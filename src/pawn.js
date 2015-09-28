@@ -8,7 +8,7 @@ Dawning.Pawn = class Pawn {
   }
 
   preload(){
-    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
+
   }
 
   moveTo(x, y){
@@ -21,7 +21,7 @@ Dawning.Pawn = class Pawn {
 
     this.man.animations.add('standing', [0], 5, false, true);
     this.man.animations.add('walk', [1,2,3,4], 5, true, true);
-    
+
     this.game.physics.arcade.enable(this.man);
 
     this.game.camera.follow(this.man);

@@ -44,7 +44,6 @@ Dawning.InputHandler = class InputHandler {
       pawn.man.animations.play('walk');
       this.positionChanged(pawn);
     } else {
-      //pawn.man.animations.stop('walk');
       pawn.man.animations.play('standing');
     }
   }

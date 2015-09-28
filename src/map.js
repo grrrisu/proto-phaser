@@ -110,16 +110,19 @@ Dawning.Map = class Map {
     this.game.load.image('banana2', 'images/banana-2@2x.png');
     this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
+    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
+
     this.data = this.loadData3();
     this.pawn.preload();
     this.rabbitBuilder.preload();
   }
 
   create(){
-    this.forest = this.game.add.group();
-    this.forest.enableBody = true;
 
     this.ground = this.game.add.group();
+
+    this.forest = this.game.add.group();
+    this.forest.enableBody = true;
 
     this.fruits = this.game.add.group();
     this.fruits.enableBody = true;
@@ -130,11 +133,14 @@ Dawning.Map = class Map {
     this.herbivors = this.game.add.group();
     this.herbivors.enableBody = true;
 
-    this.createFields();
     this.maskGraphics = this.game.add.graphics(0, 0);
     this.man = this.pawn.createMan(12, 12);
 
+    this.forestTop = this.game.add.group();
+    this.createFields();
+
     //this.forest.mask = this.maskGraphics;
+    //this.forestTop.mask = this.maskGraphics;
     this.ground.mask = this.maskGraphics;
     this.fruits.mask = this.maskGraphics;
     this.predators.mask = this.maskGraphics;
@@ -146,10 +152,10 @@ Dawning.Map = class Map {
   createFields(){
     this.data.forEach((row, y) => {
       row.forEach((field, x) => {
+        this.createGrass(x, y);
         if (field == 'x'){
           this.createTree(x, y);
         } else {
-          this.createGrass(x, y);
           if (field == '1' || field == '2' || field == '3'){
             this.createFruit(x, y, field);
           } else if(field == 'L') {
@@ -163,8 +169,9 @@ Dawning.Map = class Map {
   }
 
   createTree(x, y){
-    var tree = this.forest.create(x * this.fieldSize, y * this.fieldSize, '13_forest');
-    tree.scale.setTo(0.5);
+    var tree = this.forest.create(x * this.fieldSize, y * this.fieldSize, 'pawn', 5);
+    this.forestTop.create(x * this.fieldSize, (y-1) * this.fieldSize + 34, 'pawn', 6);
+    //tree.scale.setTo(0.5);
     tree.body.immovable = true;
   }
 
