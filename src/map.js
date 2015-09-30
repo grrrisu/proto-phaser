@@ -113,7 +113,6 @@ Dawning.Map = class Map {
     this.game.load.image('leopard', 'images/leopard@2x.png');
     this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
 
-    this.data = this.loadData3();
     this.mapData.createData(this.loadData3());
 
     this.pawn.preload();
@@ -153,21 +152,19 @@ Dawning.Map = class Map {
   }
 
   createFields(){
-    this.data.forEach((row, y) => {
-      row.forEach((field, x) => {
-        this.createGrass(x, y);
-        if (field == 'x'){
-          this.createTree(x, y);
-        } else {
-          if (field == '1' || field == '2' || field == '3'){
-            this.createFruit(x, y, field);
-          } else if(field == 'L') {
-            this.createLeopard(x, y);
-          } else if(field == 'R') {
-            this.rabbitBuilder.createRabbit(this.herbivors, x, y);
-          }
+    this.mapData.eachField((field, x, y) => {
+      this.createGrass(x, y);
+      if (field.wall){
+        this.createTree(x, y);
+      } else {
+        if(field.fruit){
+          this.createFruit(x, y, field.fruit);
+        } else if(field.predator){
+          this.createLeopard(x, y);
+        } else if(field.herbivor){
+          this.rabbitBuilder.createRabbit(this.herbivors, x, y);
         }
-      });
+      }
     });
   }
 

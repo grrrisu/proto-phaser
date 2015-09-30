@@ -18,6 +18,9 @@ Dawning.MapData = class MapData {
           x: x,
           y: y,
           wall: data[y][x] == 'x',
+          fruit: this.parseFruit(data[y][x]),
+          herbivor: data[y][x] == 'R',
+          predator: data[y][x] == 'L',
           visible: false
         }
         this.fields[y][x] = field;
@@ -25,10 +28,16 @@ Dawning.MapData = class MapData {
     })
   }
 
+  parseFruit(fruit){
+    if (fruit == '1' || fruit == '2' || fruit == '3'){
+      return fruit;
+    }
+  }
+
   eachField(callback){
     this.fields.forEach((row, y) => {
       row.forEach((field, x) => {
-        callback(field);
+        callback(field, x, y);
       })
     })
   }
