@@ -26,37 +26,49 @@ Dawning.MapData = class MapData {
   }
 
   eachField(callback){
-    this.data.forEach((row, y) => {
+    this.fields.forEach((row, y) => {
       row.forEach((field, x) => {
-        callback(x,y);
+        callback(field);
       })
     })
   }
 
   getField(x, y){
     if (this.fields[y] === undefined) return null;
+    if (this.fields[y][x] === undefined) return null;
     return this.fields[y][x];
   }
 
   fieldProperty(x, y, outsideValue, callback){
     if (this.fields[y] === undefined) return outsideValue;
+    if (this.fields[y][x] === undefined) return outsideValue;
     return callback(this.fields[y][x]);
   }
 
   isWall(x, y){
-    this.fieldProperty(x, y, true, function(field){
+    return this.fieldProperty(x, y, true, function(field){
       return field.wall;
     });
   }
 
   isVisible(x, y){
-    this.fieldProperty(x, y, false, function(field){
+    return this.fieldProperty(x, y, false, function(field){
       return field.visible;
     });
   }
 
-  setVisible(value){
-    this.fields[y][x].visible = value
+  setAllInvisible(){
+    this.eachField(function(field){
+      field.visible = false;
+    });
+  }
+
+  setVisible(x, y, value){
+    if (this.fields[y] !== undefined){
+      if (this.fields[y][x] !== undefined){
+        this.fields[y][x].visible = value
+      }
+    }
   }
 
 }

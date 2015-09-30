@@ -33,6 +33,7 @@ Dawning.Pawn = class Pawn {
   }
 
   rayCast() {
+    this.map.mapData.setAllInvisible();
     this.map.maskGraphics.clear();
     this.map.maskGraphics.beginFill(0x000000);
     var numberOfRays = 96;
@@ -47,7 +48,10 @@ Dawning.Pawn = class Pawn {
         var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
         var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
 
-        this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
+        if(!this.map.mapData.isVisible(landingX, landingY)){
+          this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
+          this.map.mapData.setVisible(landingX, landingY, true);
+        }
 
         if(!this.map.isWall(landingX, landingY)){
           lastX = landingX * this.map.fieldSize;

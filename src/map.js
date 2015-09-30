@@ -196,8 +196,6 @@ Dawning.Map = class Map {
 
   isWall(x, y){
     return this.mapData.isWall(x, y);
-    // if (this.data[y] === undefined) return true;
-    // return this.data[y][x] == 'x';
   }
 
   update(){
