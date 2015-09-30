@@ -3,6 +3,7 @@ import { InputHandler} from './inputHandler';
 import { Fog } from './fog';
 import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
+import { MapData } from './map_data';
 import { Map } from './map';
 import { Game } from './game';
 

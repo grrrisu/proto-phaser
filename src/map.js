@@ -96,6 +96,7 @@ Dawning.Map = class Map {
     this.fieldSize = options.fieldSize;
     this.halfFieldSize = this.fieldSize / 2;
     this.mapSize = this.size * this.fieldSize;
+    this.mapData = new Dawning.MapData(this);
     this.pawn = new Dawning.Pawn(this);
     this.rabbitBuilder = new Dawning.Rabbit(this);
     this.inputHandler = new Dawning.InputHandler(this);
@@ -113,6 +114,8 @@ Dawning.Map = class Map {
     this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
 
     this.data = this.loadData3();
+    this.mapData.createData(this.loadData3());
+
     this.pawn.preload();
     this.rabbitBuilder.preload();
   }
@@ -192,8 +195,9 @@ Dawning.Map = class Map {
   }
 
   isWall(x, y){
-    if (this.data[y] === undefined) return true;
-    return this.data[y][x] == 'x';
+    return this.mapData.isWall(x, y);
+    // if (this.data[y] === undefined) return true;
+    // return this.data[y][x] == 'x';
   }
 
   update(){
