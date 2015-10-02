@@ -25,42 +25,24 @@ Dawning.Pawn = class Pawn {
     this.game.physics.arcade.enable(this.man);
 
     this.game.camera.follow(this.man);
-    this.rayCast();
+    this.visibleArea();
     return this;
   }
 
   update(){
   }
 
-  rayCast() {
+  visibleArea() {
     this.map.mapData.setAllInvisible();
     this.map.maskGraphics.clear();
     this.map.maskGraphics.beginFill(0x000000);
-    var numberOfRays = 96;
-    var rayLength = 5;
     var rpos = this.map.relativePosition(this.man.x, this.man.y);
-
-    for(var i = 0; i < numberOfRays; i++){
-      var rayAngle = (Math.PI * 2 / numberOfRays) * i
-      var lastX = this.man.x;
-      var lastY = this.man.y;
-      for(var j= 0; j <= rayLength; j+=1){
-        var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
-        var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
-
-        if(!this.map.mapData.isVisible(landingX, landingY)){
-          this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
-          this.map.mapData.setVisible(landingX, landingY, true);
-        }
-
-        if(!this.map.isWall(landingX, landingY)){
-          lastX = landingX * this.map.fieldSize;
-          lastY = landingY * this.map.fieldSize;
-        } else {
-          break;
-        }
+    this.map.rayCast(rpos, (landingX, landingY) => {
+      if(!this.map.mapData.isVisible(landingX, landingY)){
+        this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
+        this.map.mapData.setVisible(landingX, landingY, true);
       }
-    }
+    });
   }
 
 }

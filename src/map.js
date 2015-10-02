@@ -214,4 +214,22 @@ Dawning.Map = class Map {
     };
   }
 
+  rayCast(rpos, callback) {
+    var numberOfRays = 96;
+    var rayLength = 5;
+    for(var i = 0; i < numberOfRays; i++){
+      var rayAngle = (Math.PI * 2 / numberOfRays) * i
+      for(var j= 0; j <= rayLength; j+=1){
+        var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
+        var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
+
+        callback(landingX, landingY);
+
+        if(this.isWall(landingX, landingY)){
+          break;
+        }
+      }
+    }
+  }
+
 }
