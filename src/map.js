@@ -195,6 +195,14 @@ Dawning.Map = class Map {
     return this.mapData.isWall(x, y);
   }
 
+  isFree(x, y){
+    return this.mapData.isFree(x, y);
+  }
+
+  getField(x, y){
+    return this.mapData.getField(x, y);
+  }
+
   update(){
     this.collisionDetection();
     this.inputHandler.moveWithCursor(this.man);
@@ -203,6 +211,7 @@ Dawning.Map = class Map {
   collisionDetection(){
     this.game.physics.arcade.collide(this.man.man, this.forest);
 
+    this.game.physics.arcade.overlap(this.man.man, this.herbivors, this.rabbitBuilder.escape, null, this.rabbitBuilder);
     this.game.physics.arcade.overlap(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
     this.game.physics.arcade.overlap(this.man.man, this.predators, this.dawning.attacked, null, this.dawning);
   }
@@ -214,9 +223,8 @@ Dawning.Map = class Map {
     };
   }
 
-  rayCast(rpos, callback) {
+  rayCast(rpos, rayLength, callback) {
     var numberOfRays = 96;
-    var rayLength = 5;
     for(var i = 0; i < numberOfRays; i++){
       var rayAngle = (Math.PI * 2 / numberOfRays) * i
       for(var j= 0; j <= rayLength; j+=1){

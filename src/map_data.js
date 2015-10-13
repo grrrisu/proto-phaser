@@ -21,6 +21,7 @@ Dawning.MapData = class MapData {
           fruit: this.parseFruit(data[y][x]),
           herbivor: data[y][x] == 'R',
           predator: data[y][x] == 'L',
+          pawn: false,
           visible: false
         }
         this.fields[y][x] = field;
@@ -57,6 +58,12 @@ Dawning.MapData = class MapData {
   isWall(x, y){
     return this.fieldProperty(x, y, true, function(field){
       return field.wall;
+    });
+  }
+
+  isFree(x, y){
+    return this.fieldProperty(x, y, false, function(field){
+      return !field.wall && !field.herbivor && !field.predator && !field.pawn;
     });
   }
 

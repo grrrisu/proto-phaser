@@ -44,6 +44,7 @@ Dawning.Rabbit = class Rabbit {
 
     var delay = this.game.rnd.integerInRange(2000, 6000);
     var tween = this.game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
+    rabbit.tween = tween;
     tween.onStart.add(this.startRabbit, this);
     tween.onComplete.add(this.stopRabbit, this);
   }
@@ -67,6 +68,33 @@ Dawning.Rabbit = class Rabbit {
 
   stopRabbit(rabbit) {
     this.assignRabbitMovement(rabbit);
+  }
+
+  escape(man, rabbit){
+    if(!rabbit.escaping){
+      //Phaser.TweenManager.remove(rabbit.tween);
+      var rpos = this.map.relativePosition(rabbit.x, rabbit.y);
+      var freeFields = [];
+      this.map.rayCast(rpos, 1, (targetX, targetY) => {
+        if(this.map.isFree(targetX, targetY)){
+          freeFields.push({x: targetX, y:targetY});
+        }
+      });
+      var freeField = this.game.rnd.pick(freeFields);
+      var targetX = freeField.x * this.map.fieldSize + this.map.halfFieldSize;
+      var targetY = freeField.y * this.map.fieldSize + this.map.halfFieldSize;
+      var tween = this.game.add.tween(rabbit).to({x: targetX, y: targetY}, 1500, Phaser.Easing.Quadratic.InOut, true);
+      tween.onStart.add(this.startEscaping, this);
+      tween.onComplete.add(this.stopEscaping, this);
+    }
+  }
+
+  startEscaping(rabbit){
+    rabbit.escaping = true;
+  }
+
+  stopEscaping(rabbit){
+    rabbit.escaping = false;
   }
 
 }

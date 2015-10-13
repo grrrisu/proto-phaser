@@ -37,7 +37,7 @@ Dawning.Pawn = class Pawn {
     this.map.maskGraphics.clear();
     this.map.maskGraphics.beginFill(0x000000);
     var rpos = this.map.relativePosition(this.man.x, this.man.y);
-    this.map.rayCast(rpos, (landingX, landingY) => {
+    this.map.rayCast(rpos, 5, (landingX, landingY) => {
       if(!this.map.mapData.isVisible(landingX, landingY)){
         this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
         this.map.mapData.setVisible(landingX, landingY, true);
