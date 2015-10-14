@@ -1,4 +1,5 @@
 import { Dawning } from './namespace';
+import { Data } from './data/maps.js';
 import { InputHandler} from './inputHandler';
 import { Fog } from './fog';
 import { Pawn } from './pawn';
