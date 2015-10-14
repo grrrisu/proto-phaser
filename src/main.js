@@ -6,6 +6,7 @@ import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
 import { MapData } from './map_data';
 import { Map } from './map';
+import { IsoMap } from './iso_map';
 import { Game } from './game';
 
 Dawning.dungeon = new Dawning.Game(

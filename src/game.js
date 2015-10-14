@@ -11,7 +11,7 @@ Dawning.Game = class Game {
           this
     );
     this.foodCollected = 0;
-    this.map = new Dawning.Map(this, options);
+    this.map = new Dawning.IsoMap(this, options);
     this.fog = new Dawning.Fog(this, this.map.mapSize);
   }
 
@@ -23,7 +23,6 @@ Dawning.Game = class Game {
   }
 
   create(){
-    this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.world.setBounds(0, 0, this.map.mapSize, this.map.mapSize);
 
     this.fog.create();
