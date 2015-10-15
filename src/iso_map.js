@@ -52,6 +52,8 @@ Dawning.IsoMap = class IsoMap {
     this.isoGroup.enableBody = true;
     this.isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;
 
+    this.forest  = [];
+    this.fruits = [];
     this.createFields();
 
     var pos = this.mapPos(12, 12);
@@ -67,18 +69,15 @@ Dawning.IsoMap = class IsoMap {
         this.createTree(pos.x, pos.y);
       } else {
         this.createGrass(pos.x, pos.y, 'grass');
+
+        if(field.fruit){
+          this.createFruit(pos.x, pos.y, field.fruit);
+        } else if(field.predator){
+          //this.createLeopard(x, y);
+        } else if(field.herbivor){
+          //this.rabbitBuilder.createRabbit(this.herbivors, x, y);
+        }
       }
-      // if (field.wall){
-      //   this.createTree(x, y);
-      // } else {
-      //   if(field.fruit){
-      //     this.createFruit(x, y, field.fruit);
-      //   } else if(field.predator){
-      //     this.createLeopard(x, y);
-      //   } else if(field.herbivor){
-      //     this.rabbitBuilder.createRabbit(this.herbivors, x, y);
-      //   }
-      // }
     });
   }
 
@@ -91,9 +90,18 @@ Dawning.IsoMap = class IsoMap {
 
   createTree(x, y){
     var tree = this.game.add.isoSprite(x -32, y -32, 0, 'tree', 0, this.isoGroup);
+    this.forest.push(tree);
     tree.anchor.set(0.5);
-    tree.body.immovable = true;
     this.game.physics.isoArcade.enable(tree);
+    tree.body.immovable = true;
+  }
+
+  createFruit(x, y, type) {
+    var fruit = this.game.add.isoSprite(x -60, y -30, 0, 'banana'+type, 0, this.isoGroup);
+    this.fruits.push(fruit);
+    fruit.scale.setTo(0.5);
+    fruit.body.immovable = true;
+    this.game.physics.isoArcade.enable(fruit);
   }
 
   mapPos(x, y){
@@ -111,10 +119,10 @@ Dawning.IsoMap = class IsoMap {
 
   collisionDetection(){
     this.game.physics.isoArcade.collide(this.man.man, this.floorGroup);
-    this.game.physics.isoArcade.collide(this.man.man, this.isoGroup);
+    this.game.physics.isoArcade.collide(this.man.man, this.forest);
 
+    this.game.physics.isoArcade.overlap(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
     // this.game.physics.isoArcade.overlap(this.man.man, this.herbivors, this.rabbitBuilder.escape, null, this.rabbitBuilder);
-    // this.game.physics.isoArcade.overlap(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
     // this.game.physics.isoArcade.overlap(this.man.man, this.predators, this.dawning.attacked, null, this.dawning);
   }
 
@@ -122,10 +130,9 @@ Dawning.IsoMap = class IsoMap {
     // this.floorGroup.forEach( (tile) => {
     //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
     // });
-    // this.forestGroup.forEach( (tile) => {
+    // this.isoGroup.forEach( (tile) => {
     //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
     // });
-    // this.game.debug.body(this.pawnBuilder.man, 'rgba(189, 221, 235, 0.6)', false);
   }
 
 }
