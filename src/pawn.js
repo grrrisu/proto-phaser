@@ -16,7 +16,7 @@ Dawning.Pawn = class Pawn {
   // }
 
   createMan(x, y) {
-    this.man = this.game.add.isoSprite(x, y, 1, 'pawn');
+    this.man = this.game.add.isoSprite(x, y, 1, 'pawn', 0, this.map.isoGroup);
     this.man.anchor.set(0.5);
 
     this.man.animations.add('standing', [0], 5, false, true);
@@ -24,11 +24,10 @@ Dawning.Pawn = class Pawn {
 
     this.game.physics.isoArcade.enable(this.man);
     this.man.enableBody = true;
-    //this.man.body.collideWorldBounds = true;
+    this.man.body.collideWorldBounds = true;
 
     this.game.camera.follow(this.man);
     //this.visibleArea();
-    console.log(this.man);
     return this;
   }
 

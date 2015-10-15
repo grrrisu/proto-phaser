@@ -23,7 +23,7 @@ Dawning.Game = class Game {
   }
 
   create(){
-    this.game.world.setBounds(0, 0, this.map.mapSize, this.map.mapSize);
+    this.game.world.setBounds(0, 0, 3 * this.map.mapSize, 3 * this.map.mapSize);
 
     //this.fog.create();
     this.map.create();
