@@ -24,7 +24,6 @@ Dawning.Map = class Map {
     this.game.load.image('banana2', 'images/banana-2@2x.png');
     this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
-    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
 
     this.mapData.createData(Dawning.Data.map3);
 

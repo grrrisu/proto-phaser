@@ -38,7 +38,7 @@ Dawning.Game = class Game {
 
   update(){
     //this.fog.update();
-    //this.map.update();
+    this.map.update();
   }
 
   render(){

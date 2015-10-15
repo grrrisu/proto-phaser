@@ -8,24 +8,27 @@ Dawning.Pawn = class Pawn {
   }
 
   preload(){
-
+    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
   }
 
-  moveTo(x, y){
-    this.man.moveTo(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30);
-  }
+  // moveTo(x, y){
+  //   this.man.moveTo(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30);
+  // }
 
   createMan(x, y) {
-    this.man = this.game.add.sprite(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30, 'pawn', 0);
-    this.man.anchor.setTo(0.5);
+    this.man = this.game.add.isoSprite(x, y, 1, 'pawn');
+    this.man.anchor.set(0.5);
 
     this.man.animations.add('standing', [0], 5, false, true);
     this.man.animations.add('walk', [1,2,3,4], 5, true, true);
 
-    this.game.physics.arcade.enable(this.man);
+    this.game.physics.isoArcade.enable(this.man);
+    this.man.enableBody = true;
+    //this.man.body.collideWorldBounds = true;
 
     this.game.camera.follow(this.man);
-    this.visibleArea();
+    //this.visibleArea();
+    console.log(this.man);
     return this;
   }
 
