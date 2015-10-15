@@ -12,9 +12,10 @@ Dawning.Rabbit = class Rabbit {
   }
 
   createRabbit(group, x, y){
-    var rabbit = group.create(x * this.map.fieldSize + this.map.halfFieldSize, y * this.map.fieldSize + this.map.halfFieldSize, 'rabbit');
-    rabbit.scale.setTo(0.5);
+    var rabbit = this.game.add.isoSprite(x -10, y -10, 0, 'rabbit', 0, this.map.isoGroup);
+    group.push(rabbit);
     rabbit.anchor.set(0.5);
+    rabbit.scale.setTo(0.5);
     this.assignRabbitMovement(rabbit);
   }
 
@@ -22,6 +23,7 @@ Dawning.Rabbit = class Rabbit {
     var direction = this.game.rnd.integerInRange(0,1);
     var delta = this.game.rnd.integerInRange(-3, 3);
     var rpos = this.map.relativePosition(rabbit.x, rabbit.y);
+    console.log(rpos);
     var targetX, targetY;
     if(direction == 0) {
       var newX = this.checkFields(rpos.x, delta, (newX) => {

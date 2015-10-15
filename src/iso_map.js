@@ -12,6 +12,7 @@ Dawning.IsoMap = class IsoMap {
     this.mapSize = this.size * this.fieldSize;
 
     this.mapData = new Dawning.MapData(this);
+    this.rabbitBuilder = new Dawning.Rabbit(this);
     this.pawnBuilder = new Dawning.Pawn(this);
     this.inputHandler = new Dawning.InputHandler(this);
     console.log(options);
@@ -39,6 +40,7 @@ Dawning.IsoMap = class IsoMap {
     this.game.load.image('leopard', 'images/leopard@2x.png');
 
     this.mapData.createData(Dawning.Data.map3);
+    this.rabbitBuilder.preload();
     this.pawnBuilder.preload();
   }
 
@@ -54,6 +56,8 @@ Dawning.IsoMap = class IsoMap {
 
     this.forest  = [];
     this.fruits = [];
+    this.herbivors = [];
+    this.predators = [];
     this.createFields();
 
     var pos = this.mapPos(12, 12);
@@ -73,9 +77,9 @@ Dawning.IsoMap = class IsoMap {
         if(field.fruit){
           this.createFruit(pos.x, pos.y, field.fruit);
         } else if(field.predator){
-          //this.createLeopard(x, y);
+          this.createLeopard(pos.x, pos.y);
         } else if(field.herbivor){
-          //this.rabbitBuilder.createRabbit(this.herbivors, x, y);
+          this.rabbitBuilder.createRabbit(this.herbivors, pos.x, pos.y);
         }
       }
     });
@@ -97,17 +101,30 @@ Dawning.IsoMap = class IsoMap {
   }
 
   createFruit(x, y, type) {
-    var fruit = this.game.add.isoSprite(x -60, y -30, 0, 'banana'+type, 0, this.isoGroup);
+    var fruit = this.game.add.isoSprite(x -30, y -20, 0, 'banana'+type, 0, this.isoGroup);
     this.fruits.push(fruit);
+    fruit.anchor.set(0.5);
     fruit.scale.setTo(0.5);
-    fruit.body.immovable = true;
-    this.game.physics.isoArcade.enable(fruit);
+  }
+
+  createLeopard(x, y){
+    var leopard = this.game.add.isoSprite(x -10, y -10, 0, 'leopard', 0, this.isoGroup);
+    this.predators.push(leopard);
+    leopard.anchor.set(0.5);
+    leopard.scale.setTo(0.5);
   }
 
   mapPos(x, y){
     return {
       x: x * this.fieldSize + y * this.gutter,
       y: y * this.fieldSize + x * this.gutter
+    }
+  }
+
+  relativePosition(x, y){
+    return {
+      x: Math.round(x  / this.fieldSize),
+      y: Math.round(y  / this.fieldSize)
     }
   }
 
@@ -123,16 +140,28 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.physics.isoArcade.overlap(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
     // this.game.physics.isoArcade.overlap(this.man.man, this.herbivors, this.rabbitBuilder.escape, null, this.rabbitBuilder);
-    // this.game.physics.isoArcade.overlap(this.man.man, this.predators, this.dawning.attacked, null, this.dawning);
+    this.game.physics.isoArcade.overlap(this.man.man, this.predators, this.dawning.attacked, null, this.dawning);
   }
 
   render() {
     // this.floorGroup.forEach( (tile) => {
     //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
     // });
-    // this.isoGroup.forEach( (tile) => {
-    //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
-    // });
+    this.isoGroup.forEach( (tile) => {
+      this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
+    });
+  }
+
+  isWall(x, y){
+    return this.mapData.isWall(x, y);
+  }
+
+  isFree(x, y){
+    return this.mapData.isFree(x, y);
+  }
+
+  getField(x, y){
+    return this.mapData.getField(x, y);
   }
 
 }
