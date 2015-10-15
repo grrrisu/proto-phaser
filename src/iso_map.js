@@ -7,7 +7,7 @@ Dawning.IsoMap = class IsoMap {
     this.game    = dawning.game;
     this.size = options.size;
     this.fieldSize = 68; //options.fieldSize;
-    this.gutter = 0; // unknown gap
+    this.gutter = 5; // unknown gap
     this.halfFieldSize = this.fieldSize / 2;
     this.mapSize = this.size * this.fieldSize;
 
@@ -82,8 +82,8 @@ Dawning.IsoMap = class IsoMap {
 
   mapPos(x, y){
     return {
-      x: x * this.fieldSize + x * this.gutter,
-      y: y * this.fieldSize + y * this.gutter
+      x: x * this.fieldSize + y * this.gutter,
+      y: y * this.fieldSize + x * this.gutter
     }
   }
 
