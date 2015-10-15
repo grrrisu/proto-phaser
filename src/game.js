@@ -12,7 +12,7 @@ Dawning.Game = class Game {
     );
     this.foodCollected = 0;
     this.map = new Dawning.IsoMap(this, options);
-    this.fog = new Dawning.Fog(this, this.map.mapSize);
+    //this.fog = new Dawning.Fog(this, this.map.mapSize);
   }
 
   preload(){
@@ -25,7 +25,7 @@ Dawning.Game = class Game {
   create(){
     this.game.world.setBounds(0, 0, this.map.mapSize, this.map.mapSize);
 
-    this.fog.create();
+    //this.fog.create();
     this.map.create();
 
     this.foodScore = this.game.add.text(0, 0, "Food: 0", { font: "32px Arial", fill: "#ffffff", align: "center" });
@@ -37,8 +37,12 @@ Dawning.Game = class Game {
   }
 
   update(){
-    this.fog.update();
-    this.map.update();
+    //this.fog.update();
+    //this.map.update();
+  }
+
+  render(){
+    this.map.render();
   }
 
   collectBanana(man, banana) {

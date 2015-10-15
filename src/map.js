@@ -34,7 +34,7 @@ Dawning.Map = class Map {
 
   create(){
     this.game.physics.startSystem(Phaser.Physics.P2JS);
-    
+
     this.ground = this.game.add.group();
 
     this.forest = this.game.add.group();
