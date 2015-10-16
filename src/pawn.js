@@ -27,7 +27,7 @@ Dawning.Pawn = class Pawn {
     this.man.body.collideWorldBounds = true;
 
     this.game.camera.follow(this.man);
-    //this.visibleArea();
+    this.visibleArea();
     return this;
   }
 
@@ -36,13 +36,11 @@ Dawning.Pawn = class Pawn {
 
   visibleArea() {
     this.map.mapData.setAllInvisible();
-    this.map.maskGraphics.clear();
-    this.map.maskGraphics.beginFill(0x000000);
-    var rpos = this.map.relativePosition(this.man.x, this.man.y);
-    this.map.rayCast(rpos, 5, (landingX, landingY) => {
-      if(!this.map.mapData.isVisible(landingX, landingY)){
-        this.map.maskGraphics.drawRect(landingX * this.map.fieldSize, landingY * this.map.fieldSize, this.map.fieldSize, this.map.fieldSize);
-        this.map.mapData.setVisible(landingX, landingY, true);
+    var rpos = this.map.relativePosition(this.man.isoX, this.man.isoY);
+    this.map.mapData.rayCast(rpos, 5, (x, y) => {
+      if(!this.map.mapData.isVisible(x, y)){
+        this.map.mapData.highlight(x, y);
+        this.map.mapData.setVisible(x, y, true);
       }
     });
   }

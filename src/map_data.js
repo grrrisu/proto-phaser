@@ -22,11 +22,51 @@ Dawning.MapData = class MapData {
           herbivor: data[y][x] == 'R',
           predator: data[y][x] == 'L',
           pawn: false,
-          visible: false
+          visible: false,
+          sprites: []
         }
         this.fields[y][x] = field;
       })
     })
+  }
+
+  addSprite(sprite, x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.sprites.push(sprite);
+    }
+  }
+
+  removeSprite(x, y){
+
+  }
+
+  highlight(x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.sprites.forEach((sprite) => {
+        sprite.tint = 0xffffff;
+      });
+    }
+  }
+
+  lowlightField(field){
+    field.sprites.forEach((sprite) => {
+      sprite.tint = 0x666666;
+    });
+  }
+
+  lowlight(x, y){
+    var field = this.getField(x, y);
+    if(field){
+      this.lowlightField(field);
+    }
+  }
+
+  lowlightAll(){
+    this.eachField((field, x, y) => {
+      this.lowlightField(field);
+    });
   }
 
   parseFruit(fruit){
@@ -74,8 +114,9 @@ Dawning.MapData = class MapData {
   }
 
   setAllInvisible(){
-    this.eachField(function(field){
+    this.eachField((field) => {
       field.visible = false;
+      this.lowlightField(field);
     });
   }
 
@@ -83,6 +124,23 @@ Dawning.MapData = class MapData {
     if (this.fields[y] !== undefined){
       if (this.fields[y][x] !== undefined){
         this.fields[y][x].visible = value
+      }
+    }
+  }
+
+  rayCast(rpos, rayLength, callback) {
+    var numberOfRays = 96;
+    for(var i = 0; i < numberOfRays; i++){
+      var rayAngle = (Math.PI * 2 / numberOfRays) * i
+      for(var j= 0; j <= rayLength; j+=1){
+        var landingX = Math.round(rpos.x - j * Math.cos(rayAngle));
+        var landingY = Math.round(rpos.y - j * Math.sin(rayAngle));
+
+        callback(landingX, landingY);
+
+        if(this.isWall(landingX, landingY)){
+          break;
+        }
       }
     }
   }

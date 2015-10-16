@@ -56,7 +56,9 @@ Dawning.IsoMap = class IsoMap {
     this.fruits = [];
     this.herbivors = [];
     this.predators = [];
+
     this.createFields();
+    this.mapData.lowlightAll();
 
     var pos = this.mapPosition(12, 12);
     this.man = this.pawnBuilder.createMan(pos.x, pos.y);
@@ -67,51 +69,55 @@ Dawning.IsoMap = class IsoMap {
     this.mapData.eachField((field, x, y) => {
       var pos = this.mapPosition(x, y);
       if (field.wall){
-        this.createGrass(pos.x, pos.y, 'forest');
-        this.createTree(pos.x, pos.y);
+        this.createGrass(pos.x, pos.y, x, y, 'forest');
+        this.createTree(pos.x, pos.y, x, y);
       } else {
-        this.createGrass(pos.x, pos.y, 'grass');
+        this.createGrass(pos.x, pos.y, x, y, 'grass');
 
         if(field.fruit){
-          this.createFruit(pos.x, pos.y, field.fruit);
+          this.createFruit(pos.x, pos.y, x, y, field.fruit);
         } else if(field.predator){
-          this.createLeopard(pos.x, pos.y);
+          this.createLeopard(pos.x, pos.y, x, y);
         } else if(field.herbivor){
-          this.rabbitBuilder.createRabbit(this.herbivors, pos.x, pos.y);
+          this.rabbitBuilder.createRabbit(this.herbivors, pos.x, pos.y, x, y);
         }
       }
     });
   }
 
-  createGrass(x, y, spriteName){
+  createGrass(x, y, dataX, dataY, spriteName){
     var floorTile = this.game.add.isoSprite(x, y, 1, spriteName, 0, this.floorGroup);
     floorTile.anchor.set(0.5);
-    floorTile.body.immovable = true;
     this.game.physics.isoArcade.enable(floorTile);
+    floorTile.body.immovable = true;
+    this.mapData.addSprite(floorTile, dataX, dataY);
   }
 
-  createTree(x, y){
+  createTree(x, y, dataX, dataY){
     var tree = this.game.add.isoSprite(x -32, y -32, 0, 'tree', 0, this.isoGroup);
     this.forest.push(tree);
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
     tree.body.immovable = true;
+    this.mapData.addSprite(tree, dataX, dataY);
   }
 
-  createFruit(x, y, type) {
+  createFruit(x, y, dataX, dataY, type) {
     var fruit = this.game.add.isoSprite(x -30, y -20, 0, 'banana'+type, 0, this.isoGroup);
     this.fruits.push(fruit);
     this.game.physics.isoArcade.enable(fruit);
     fruit.anchor.set(0.5);
     fruit.scale.setTo(0.5);
+    this.mapData.addSprite(fruit, dataX, dataY);
   }
 
-  createLeopard(x, y){
+  createLeopard(x, y, dataX, dataY){
     var leopard = this.game.add.isoSprite(x -10, y -10, 0, 'leopard', 0, this.isoGroup);
     this.predators.push(leopard);
     this.game.physics.isoArcade.enable(leopard);
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
+    this.mapData.addSprite(leopard, dataX, dataY);
   }
 
   mapPosition(x, y){
