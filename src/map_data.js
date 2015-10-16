@@ -23,7 +23,9 @@ Dawning.MapData = class MapData {
           predator: data[y][x] == 'L',
           pawn: false,
           visible: false,
-          sprites: [],
+          wasVisible: false,
+          floors: [],
+          obstacles: [],
           things: []
         }
         this.fields[y][x] = field;
@@ -31,10 +33,18 @@ Dawning.MapData = class MapData {
     })
   }
 
-  addSprite(sprite, x, y){
+  addFloor(sprite, x, y){
     var field = this.getField(x, y);
     if(field){
-      field.sprites.push(sprite);
+      field.floors.push(sprite);
+      sprite.field = field;
+    }
+  }
+
+  addObstacle(sprite, x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.obstacles.push(sprite);
       sprite.field = field;
     }
   }
@@ -47,11 +57,20 @@ Dawning.MapData = class MapData {
     }
   }
 
-  removeSprite(sprite){
+  removeFloor(sprite){
     var field = sprite.field;
-    var pos = field.sprites.indexOf(sprite);
+    var pos = field.floors.indexOf(sprite);
     if (pos > -1){
-      field.sprites.splice(pos, 1);
+      field.floors.splice(pos, 1);
+      sprite.field = null;
+    }
+  }
+
+  removeObstacle(sprite){
+    var field = sprite.field;
+    var pos = field.obstacles.indexOf(sprite);
+    if (pos > -1){
+      field.obstacles.splice(pos, 1);
       sprite.field = null;
     }
   }
@@ -66,11 +85,18 @@ Dawning.MapData = class MapData {
   }
 
   highlightField(field){
-    field.sprites.forEach((sprite) => {
-      sprite.tint = 0xffffff;
+    field.floors.forEach((sprite) => {
+      this.darkenSprite(sprite, 6, 0);
     });
+    field.obstacles.forEach((sprite) => {
+      this.darkenSprite(sprite, 6, 0);
+    });
+    this.highlightThings(field);
+  }
+
+  highlightThings(field){
     field.things.forEach((sprite) => {
-      sprite.visible = true;
+      this.game.add.tween(sprite).to({alpha: 1.0}, 500, Phaser.Easing.Quadratic.InOut, true);
     });
   }
 
@@ -82,12 +108,33 @@ Dawning.MapData = class MapData {
   }
 
   lowlightField(field){
-    field.sprites.forEach((sprite) => {
-      sprite.tint = 0x888888;
+    field.floors.forEach((sprite) => {
+      this.darkenSprite(sprite, 0, 6);
     });
-    field.things.forEach((thing) => {
-      thing.visible = false;
+    field.obstacles.forEach((sprite) => {
+      this.darkenSprite(sprite, 0, 6);
     });
+    this.lowlightThings(field);
+  }
+
+  lowlightThings(field){
+    field.things.forEach((sprite) => {
+      this.game.add.tween(sprite).to({alpha: 0.0}, 500, Phaser.Easing.Quadratic.InOut, true);
+    });
+  }
+
+  darkenSprite(sprite, startValue, endValue){
+    var darkness = [0xffffff, 0xdddddd, 0xcccccc, 0xbbbbbb, 0xaaaaaa, 0x999999, 0x888888];
+    var colorBlend = {step: startValue};
+    // create the tween on this object and tween its step property to 100
+    var colorTween = this.game.add.tween(colorBlend).to({step: endValue}, 500);
+    // run the interpolateColor function every time the tween updates, feeding it the
+    // updated value of our tween each time, and set the result as our tint
+    colorTween.onUpdateCallback(function() {
+      sprite.tint = darkness[Math.round(colorBlend.step)];
+    });
+    // start the tween
+    colorTween.start();
   }
 
   lowlight(x, y){
@@ -103,13 +150,13 @@ Dawning.MapData = class MapData {
     });
   }
 
-  applyVisability(x, y){
+  applyThingVisability(x, y){
     var field = this.getField(x, y);
     if(field){
       if(field.visible){
-        this.highlightField(field);
+        this.highlightThings(field);
       } else {
-        this.lowlightField(field);
+        this.lowlightThings(field);
       }
     }
   }
@@ -160,9 +207,22 @@ Dawning.MapData = class MapData {
 
   setAllInvisible(){
     this.eachField((field) => {
+      if(field.visible){
+        field.wasVisible = true;
+      }
       field.visible = false;
-      this.lowlightField(field);
     });
+  }
+
+  lowlightPreviousVisibles(){
+    this.eachField((field) => {
+      if(field.wasVisible && !field.visible){
+        this.lowlightField(field);
+      } else if (field.visible && !field.wasVisible){
+        this.highlightField(field);
+      }
+      field.wasVisible = false;
+    })
   }
 
   setVisible(x, y, value){

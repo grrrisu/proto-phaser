@@ -90,7 +90,7 @@ Dawning.IsoMap = class IsoMap {
     floorTile.anchor.set(0.5);
     this.game.physics.isoArcade.enable(floorTile);
     floorTile.body.immovable = true;
-    this.mapData.addSprite(floorTile, dataX, dataY);
+    this.mapData.addFloor(floorTile, dataX, dataY);
   }
 
   createTree(x, y, dataX, dataY){
@@ -99,7 +99,7 @@ Dawning.IsoMap = class IsoMap {
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
     tree.body.immovable = true;
-    this.mapData.addSprite(tree, dataX, dataY);
+    this.mapData.addObstacle(tree, dataX, dataY);
   }
 
   createFruit(x, y, dataX, dataY, type) {

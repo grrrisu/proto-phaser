@@ -39,10 +39,10 @@ Dawning.Pawn = class Pawn {
     var rpos = this.map.relativePosition(this.man.isoX, this.man.isoY);
     this.map.mapData.rayCast(rpos, 5, (x, y) => {
       if(!this.map.mapData.isVisible(x, y)){
-        this.map.mapData.highlight(x, y);
         this.map.mapData.setVisible(x, y, true);
       }
     });
+    this.map.mapData.lowlightPreviousVisibles();
   }
 
 }
