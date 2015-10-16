@@ -83,7 +83,7 @@ Dawning.MapData = class MapData {
 
   lowlightField(field){
     field.sprites.forEach((sprite) => {
-      sprite.tint = 0x777777;
+      sprite.tint = 0x888888;
     });
     field.things.forEach((thing) => {
       thing.visible = false;

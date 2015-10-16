@@ -16,7 +16,7 @@ Dawning.Pawn = class Pawn {
   // }
 
   createMan(x, y) {
-    this.man = this.game.add.isoSprite(x, y, 1, 'pawn', 0, this.map.isoGroup);
+    this.man = this.game.add.isoSprite(x, y, 0, 'pawn', 0, this.map.isoGroup);
     this.man.anchor.set(0.5);
 
     this.man.animations.add('standing', [0], 5, false, true);
