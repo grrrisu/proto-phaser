@@ -11,10 +11,6 @@ Dawning.Pawn = class Pawn {
     this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
   }
 
-  // moveTo(x, y){
-  //   this.man.moveTo(x * this.map.fieldSize + 25, y * this.map.fieldSize + 30);
-  // }
-
   createMan(x, y) {
     this.man = this.game.add.isoSprite(x, y, 0, 'pawn', 0, this.map.isoGroup);
     this.man.anchor.set(0.5);
@@ -42,7 +38,29 @@ Dawning.Pawn = class Pawn {
         this.map.mapData.setVisible(x, y, true);
       }
     });
+    this.lookBehindObstacles(rpos.x, rpos.y);
     this.map.mapData.lowlightPreviousVisibles();
+  }
+
+  lookBehindObstacles(x, y){
+    x = Math.round(x);
+    y = Math.round(y);
+    this.map.mapData.eachField((field) => {
+      field.obstacles.forEach((obstacle) => {
+        if(obstacle.alpha < 1.0){
+          this.game.add.tween(obstacle).to({alpha: 1.0}, 500, Phaser.Easing.Quadratic.InOut, true);
+        }
+      });
+    });
+    this.map.mapData.getField(x, y + 1).obstacles.forEach((obstacle) => {
+      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
+    });
+    this.map.mapData.getField(x + 1, y + 1).obstacles.forEach((obstacle) => {
+      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
+    });
+    this.map.mapData.getField(x + 1, y).obstacles.forEach((obstacle) => {
+      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
+    });
   }
 
 }
