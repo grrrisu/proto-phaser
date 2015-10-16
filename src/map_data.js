@@ -23,7 +23,8 @@ Dawning.MapData = class MapData {
           predator: data[y][x] == 'L',
           pawn: false,
           visible: false,
-          sprites: []
+          sprites: [],
+          things: []
         }
         this.fields[y][x] = field;
       })
@@ -34,25 +35,58 @@ Dawning.MapData = class MapData {
     var field = this.getField(x, y);
     if(field){
       field.sprites.push(sprite);
+      sprite.field = field;
     }
   }
 
-  removeSprite(x, y){
+  addThing(sprite, x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.things.push(sprite);
+      sprite.field = field;
+    }
+  }
 
+  removeSprite(sprite){
+    var field = sprite.field;
+    var pos = field.sprites.indexOf(sprite);
+    if (pos > -1){
+      field.sprites.splice(pos, 1);
+      sprite.field = null;
+    }
+  }
+
+  removeThing(sprite){
+    var field = sprite.field;
+    var pos = field.things.indexOf(sprite);
+    if (pos > -1){
+      field.things.splice(pos, 1);
+      sprite.field = null;
+    }
+  }
+
+  highlightField(field){
+    field.sprites.forEach((sprite) => {
+      sprite.tint = 0xffffff;
+    });
+    field.things.forEach((sprite) => {
+      sprite.visible = true;
+    });
   }
 
   highlight(x, y){
     var field = this.getField(x, y);
     if(field){
-      field.sprites.forEach((sprite) => {
-        sprite.tint = 0xffffff;
-      });
+      this.highlightField(field);
     }
   }
 
   lowlightField(field){
     field.sprites.forEach((sprite) => {
-      sprite.tint = 0x666666;
+      sprite.tint = 0x777777;
+    });
+    field.things.forEach((thing) => {
+      thing.visible = false;
     });
   }
 
@@ -67,6 +101,17 @@ Dawning.MapData = class MapData {
     this.eachField((field, x, y) => {
       this.lowlightField(field);
     });
+  }
+
+  applyVisability(x, y){
+    var field = this.getField(x, y);
+    if(field){
+      if(field.visible){
+        this.highlightField(field);
+      } else {
+        this.lowlightField(field);
+      }
+    }
   }
 
   parseFruit(fruit){

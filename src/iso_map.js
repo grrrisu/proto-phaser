@@ -108,7 +108,7 @@ Dawning.IsoMap = class IsoMap {
     this.game.physics.isoArcade.enable(fruit);
     fruit.anchor.set(0.5);
     fruit.scale.setTo(0.5);
-    this.mapData.addSprite(fruit, dataX, dataY);
+    this.mapData.addThing(fruit, dataX, dataY);
   }
 
   createLeopard(x, y, dataX, dataY){
@@ -117,7 +117,7 @@ Dawning.IsoMap = class IsoMap {
     this.game.physics.isoArcade.enable(leopard);
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
-    this.mapData.addSprite(leopard, dataX, dataY);
+    this.mapData.addThing(leopard, dataX, dataY);
   }
 
   mapPosition(x, y){

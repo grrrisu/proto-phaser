@@ -57,6 +57,7 @@ Dawning.Game = class Game {
         this.incFood(60);
         break;
     }
+    this.map.mapData.removeThing(banana);
     banana.kill();
   }
 
