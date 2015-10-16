@@ -11,7 +11,7 @@ import { Game } from './game';
 
 Dawning.dungeon = new Dawning.Game(
   {
-    width: 800,
+    width: 1200,
     heidht: 600,
     element: '#game',
     size: 25,

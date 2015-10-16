@@ -51,23 +51,21 @@ Dawning.IsoMap = class IsoMap {
     this.floorGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;
 
     this.isoGroup = this.game.add.group();
-    this.isoGroup.enableBody = true;
-    this.isoGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;
-
+    
     this.forest  = [];
     this.fruits = [];
     this.herbivors = [];
     this.predators = [];
     this.createFields();
 
-    var pos = this.mapPos(12, 12);
+    var pos = this.mapPosition(12, 12);
     this.man = this.pawnBuilder.createMan(pos.x, pos.y);
     this.inputHandler.create();
   }
 
   createFields(){
     this.mapData.eachField((field, x, y) => {
-      var pos = this.mapPos(x, y);
+      var pos = this.mapPosition(x, y);
       if (field.wall){
         this.createGrass(pos.x, pos.y, 'forest');
         this.createTree(pos.x, pos.y);
@@ -103,6 +101,7 @@ Dawning.IsoMap = class IsoMap {
   createFruit(x, y, type) {
     var fruit = this.game.add.isoSprite(x -30, y -20, 0, 'banana'+type, 0, this.isoGroup);
     this.fruits.push(fruit);
+    this.game.physics.isoArcade.enable(fruit);
     fruit.anchor.set(0.5);
     fruit.scale.setTo(0.5);
   }
@@ -114,7 +113,7 @@ Dawning.IsoMap = class IsoMap {
     leopard.scale.setTo(0.5);
   }
 
-  mapPos(x, y){
+  mapPosition(x, y){
     return {
       x: x * this.fieldSize + y * this.gutter,
       y: y * this.fieldSize + x * this.gutter
@@ -122,9 +121,10 @@ Dawning.IsoMap = class IsoMap {
   }
 
   relativePosition(x, y){
+    var divisor = Math.pow(this.fieldSize, 2) - Math.pow(this.gutter, 2);
     return {
-      x: Math.round(x  / this.fieldSize),
-      y: Math.round(y  / this.fieldSize)
+      x: (x * this.fieldSize - y * this.gutter) / divisor,
+      y: (y * this.fieldSize - x * this.gutter) / divisor
     }
   }
 
@@ -147,9 +147,9 @@ Dawning.IsoMap = class IsoMap {
     // this.floorGroup.forEach( (tile) => {
     //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
     // });
-    this.isoGroup.forEach( (tile) => {
-      this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
-    });
+    // this.isoGroup.forEach( (tile) => {
+    //   this.game.debug.body(tile, 'rgba(189, 221, 235, 0.6)', false);
+    // });
   }
 
   isWall(x, y){

@@ -22,30 +22,27 @@ Dawning.Rabbit = class Rabbit {
   assignRabbitMovement(rabbit){
     var direction = this.game.rnd.integerInRange(0,1);
     var delta = this.game.rnd.integerInRange(-3, 3);
-    var rpos = this.map.relativePosition(rabbit.x, rabbit.y);
-    console.log(rpos);
-    var targetX, targetY;
+    var rpos = this.map.relativePosition(rabbit.isoX + 10, rabbit.isoY + 10);
+    var newPos;
     if(direction == 0) {
       var newX = this.checkFields(rpos.x, delta, (newX) => {
         return this.map.isWall(newX, rpos.y);
       });
-      targetX = newX * this.map.fieldSize + this.map.halfFieldSize;
-      if(targetX < rabbit.x){
+      newPos = this.map.mapPosition(newX, rpos.y);
+      if(newPos.x < rabbit.isoX){
         rabbit.scale.x = -0.5;
-      } else if (targetX > rabbit.x){
+      } else if (newPos.x > rabbit.isoX){
         rabbit.scale.x = 0.5;
       }
-      targetY = rabbit.y;
     } else {
       var newY = this.checkFields(rpos.y, delta, (newY) => {
         return this.map.isWall(rpos.x, newY);
       });
-      targetY = newY * this.map.fieldSize + this.map.halfFieldSize;
-      targetX = rabbit.x;
+      newPos = this.map.mapPosition(rpos.x, newY);
     }
 
     var delay = this.game.rnd.integerInRange(2000, 6000);
-    var tween = this.game.add.tween(rabbit).to({x: targetX, y: targetY}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
+    var tween = this.game.add.tween(rabbit).to({isoX: newPos.x - 10, isoY: newPos.y - 10}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
     rabbit.tween = tween;
     tween.onStart.add(this.startRabbit, this);
     tween.onComplete.add(this.stopRabbit, this);
