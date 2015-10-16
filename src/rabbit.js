@@ -5,6 +5,7 @@ Dawning.Rabbit = class Rabbit {
   constructor(map){
     this.map = map;
     this.game = map.game;
+    this.padding = 10;
   }
 
   preload(){
@@ -12,7 +13,7 @@ Dawning.Rabbit = class Rabbit {
   }
 
   createRabbit(group, x, y){
-    var rabbit = this.game.add.isoSprite(x -10, y -10, 0, 'rabbit', 0, this.map.isoGroup);
+    var rabbit = this.game.add.isoSprite(x - this.padding, y - this.padding, 0, 'rabbit', 0, this.map.isoGroup);
     group.push(rabbit);
     rabbit.anchor.set(0.5);
     rabbit.scale.setTo(0.5);
@@ -22,7 +23,7 @@ Dawning.Rabbit = class Rabbit {
   assignRabbitMovement(rabbit){
     var direction = this.game.rnd.integerInRange(0,1);
     var delta = this.game.rnd.integerInRange(-3, 3);
-    var rpos = this.map.relativePosition(rabbit.isoX + 10, rabbit.isoY + 10);
+    var rpos = this.map.relativePosition(rabbit.isoX + this.padding, rabbit.isoY + this.padding);
     var newPos;
     if(direction == 0) {
       var newX = this.checkFields(rpos.x, delta, (newX) => {
@@ -42,7 +43,7 @@ Dawning.Rabbit = class Rabbit {
     }
 
     var delay = this.game.rnd.integerInRange(2000, 6000);
-    var tween = this.game.add.tween(rabbit).to({isoX: newPos.x - 10, isoY: newPos.y - 10}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
+    var tween = this.game.add.tween(rabbit).to({isoX: newPos.x - this.padding, isoY: newPos.y - this.padding}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
     rabbit.tween = tween;
     tween.onStart.add(this.startRabbit, this);
     tween.onComplete.add(this.stopRabbit, this);

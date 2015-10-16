@@ -51,7 +51,7 @@ Dawning.IsoMap = class IsoMap {
     this.floorGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;
 
     this.isoGroup = this.game.add.group();
-    
+
     this.forest  = [];
     this.fruits = [];
     this.herbivors = [];
@@ -109,6 +109,7 @@ Dawning.IsoMap = class IsoMap {
   createLeopard(x, y){
     var leopard = this.game.add.isoSprite(x -10, y -10, 0, 'leopard', 0, this.isoGroup);
     this.predators.push(leopard);
+    this.game.physics.isoArcade.enable(leopard);
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
   }
