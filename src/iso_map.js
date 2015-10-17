@@ -24,7 +24,6 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.world.setBounds(0, 0, this.size * this.fieldSize, this.size * this.fieldSize);
 
-	  // Start the physical system
 	  this.game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
 
 	  // set the middle of the world in the middle of the screen
