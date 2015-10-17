@@ -31,8 +31,11 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.load.image('field', 'images/iso_field.png');
     this.game.load.image('grass', 'images/iso_grass.png');
-    this.game.load.image('forest', 'images/iso_forest.png');
-    this.game.load.image('tree', 'images/iso_tree.png');
+
+    this.game.load.image('tree1', 'images/jungle_tree_1.png');
+    this.game.load.image('tree2', 'images/jungle_tree_2.png');
+    this.game.load.image('tree3', 'images/jungle_tree_3.png');
+    this.game.load.image('tree4', 'images/jungle_tree_4.png');
 
     this.game.load.image('banana1', 'images/banana-1@2x.png');
     this.game.load.image('banana2', 'images/banana-2@2x.png');
@@ -68,12 +71,10 @@ Dawning.IsoMap = class IsoMap {
   createFields(){
     this.mapData.eachField((field, x, y) => {
       var pos = this.mapPosition(x, y);
+      this.createGrass(pos.x, pos.y, x, y);
       if (field.wall){
-        this.createGrass(pos.x, pos.y, x, y, 'forest');
         this.createTree(pos.x, pos.y, x, y);
       } else {
-        this.createGrass(pos.x, pos.y, x, y, 'grass');
-
         if(field.fruit){
           this.createFruit(pos.x, pos.y, x, y, field.fruit);
         } else if(field.predator){
@@ -85,8 +86,8 @@ Dawning.IsoMap = class IsoMap {
     });
   }
 
-  createGrass(x, y, dataX, dataY, spriteName){
-    var floorTile = this.game.add.isoSprite(x, y, 1, spriteName, 0, this.floorGroup);
+  createGrass(x, y, dataX, dataY){
+    var floorTile = this.game.add.isoSprite(x + 40, y + 40, 1, 'grass', 0, this.floorGroup);
     floorTile.anchor.set(0.5);
     this.game.physics.isoArcade.enable(floorTile);
     floorTile.body.immovable = true;
@@ -94,7 +95,8 @@ Dawning.IsoMap = class IsoMap {
   }
 
   createTree(x, y, dataX, dataY){
-    var tree = this.game.add.isoSprite(x -32, y -32, 0, 'tree', 0, this.isoGroup);
+    var num  = this.game.rnd.integerInRange(1, 4);
+    var tree = this.game.add.isoSprite(x -10, y -10, 0, ('tree'+num), 0, this.isoGroup);
     this.forest.push(tree);
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
