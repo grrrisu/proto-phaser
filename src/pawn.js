@@ -11,7 +11,7 @@ Dawning.Pawn = class Pawn {
     this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
   }
 
-  createMan(x, y) {
+  createMan(x, y, dataX, dataY) {
     this.man = this.game.add.isoSprite(x, y, 0, 'pawn', 0, this.map.isoGroup);
     this.man.anchor.set(0.5);
 
@@ -23,28 +23,25 @@ Dawning.Pawn = class Pawn {
     this.man.body.collideWorldBounds = true;
 
     this.game.camera.follow(this.man);
-    this.visibleArea();
+    this.visibleArea(dataX, dataY);
     return this;
   }
 
   update(){
   }
 
-  visibleArea() {
-    this.map.mapData.setAllInvisible();
-    var rpos = this.map.relativePosition(this.man.isoX, this.man.isoY);
-    this.map.mapData.rayCast(rpos, 5, (x, y) => {
-      if(!this.map.mapData.isVisible(x, y)){
-        this.map.mapData.setVisible(x, y, true);
+  visibleArea(pawnX, pawnY) {
+    this.map.visability.setAllInvisible();
+    this.map.mapData.rayCast({x: pawnX, y: pawnY}, 5, (x, y) => {
+      if(!this.map.visability.isVisible(x, y)){
+        this.map.visability.setVisible(x, y, true);
       }
     });
-    this.lookBehindObstacles(rpos.x, rpos.y);
-    this.map.mapData.lowlightPreviousVisibles();
+    this.lookBehindObstacles(pawnX, pawnY);
+    this.map.visability.lowlightPreviousVisibles();
   }
 
   lookBehindObstacles(x, y){
-    x = Math.round(x);
-    y = Math.round(y);
     this.map.mapData.eachField((field) => {
       field.obstacles.forEach((obstacle) => {
         if(obstacle.alpha < 1.0){
@@ -52,9 +49,9 @@ Dawning.Pawn = class Pawn {
         }
       });
     });
-    this.map.mapData.lookBehindField(x, y + 1);
-    this.map.mapData.lookBehindField(x + 1, y + 1);
-    this.map.mapData.lookBehindField(x + 1, y);
+    this.map.visability.lookBehindField(x, y + 1);
+    this.map.visability.lookBehindField(x + 1, y + 1);
+    this.map.visability.lookBehindField(x + 1, y);
   }
 
 }

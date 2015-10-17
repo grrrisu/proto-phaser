@@ -6,12 +6,13 @@ Dawning.IsoMap = class IsoMap {
     this.dawning = dawning;
     this.game    = dawning.game;
     this.size = options.size;
-    this.fieldSize = 68; //options.fieldSize;
+    this.fieldSize = options.fieldSize;
     this.gutter = 5; // unknown gap
     this.halfFieldSize = this.fieldSize / 2;
     this.mapSize = this.size * this.fieldSize;
 
     this.mapData = new Dawning.MapData(this);
+    this.visability = new Dawning.Visability(this.mapData);
     this.rabbitBuilder = new Dawning.Rabbit(this);
     this.pawnBuilder = new Dawning.Pawn(this);
     this.inputHandler = new Dawning.InputHandler(this);
@@ -58,10 +59,10 @@ Dawning.IsoMap = class IsoMap {
     this.predators = [];
 
     this.createFields();
-    this.mapData.lowlightAll();
+    this.visability.lowlightAll();
 
     var pos = this.mapPosition(12, 12);
-    this.man = this.pawnBuilder.createMan(pos.x, pos.y);
+    this.man = this.pawnBuilder.createMan(pos.x, pos.y, 12, 12);
     this.inputHandler.create();
   }
 

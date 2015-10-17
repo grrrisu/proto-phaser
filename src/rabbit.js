@@ -70,7 +70,7 @@ Dawning.Rabbit = class Rabbit {
   stopRabbit(rabbit) {
     var rpos = this.map.relativePosition(rabbit.isoX + this.padding, rabbit.isoY + this.padding);
     this.map.mapData.addThing(rabbit, rpos.x, rpos.y);
-    this.map.mapData.applyThingVisability(rpos.x, rpos.y);
+    this.map.visability.applyThingVisability(rpos.x, rpos.y);
     this.assignRabbitMovement(rabbit);
   }
 

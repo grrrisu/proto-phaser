@@ -5,6 +5,7 @@ import { Fog } from './fog';
 import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
 import { MapData } from './map_data';
+import { Visability} from './visability';
 import { Map } from './map';
 import { IsoMap } from './iso_map';
 import { Game } from './game';
@@ -15,6 +16,6 @@ Dawning.dungeon = new Dawning.Game(
     heidht: 600,
     element: '#game',
     size: 25,
-    fieldSize: 55
+    fieldSize: 68
   }
 );

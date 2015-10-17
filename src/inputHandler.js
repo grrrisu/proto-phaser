@@ -14,9 +14,11 @@ Dawning.InputHandler = class InputHandler {
 
   positionChanged(pawn){
     var rpos = this.map.relativePosition(pawn.man.isoX, pawn.man.isoY);
-    if (this.currentPos.x != Math.round(rpos.x) || this.currentPos.y != Math.round(rpos.y)){
-      pawn.visibleArea();
-      this.currentPos = {x: Math.round(rpos.x), y: Math.round(rpos.y)};
+    var x = Math.round(rpos.x);
+    var y = Math.round(rpos.y);
+    if (this.currentPos.x != x || this.currentPos.y != y){
+      pawn.visibleArea(x, y);
+      this.currentPos = {x: x, y: y};
     }
   }
 
