@@ -37,7 +37,7 @@ Dawning.IsoMap = class IsoMap {
     this.game.load.image('tree3', 'images/jungle_tree_3.png');
     this.game.load.image('tree4', 'images/jungle_tree_4.png');
 
-    this.game.load.image('banana1', 'images/banana-1@2x.png');
+    this.game.load.image('banana1', 'images/palm_1.png');
     this.game.load.image('banana2', 'images/banana-2@2x.png');
     this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
@@ -105,11 +105,11 @@ Dawning.IsoMap = class IsoMap {
   }
 
   createFruit(x, y, dataX, dataY, type) {
-    var fruit = this.game.add.isoSprite(x -30, y -20, 0, 'banana'+type, 0, this.isoGroup);
+    var fruit = this.game.add.isoSprite(x, y, 0, 'banana'+type, 0, this.isoGroup);
     this.fruits.push(fruit);
     this.game.physics.isoArcade.enable(fruit);
     fruit.anchor.set(0.5);
-    fruit.scale.setTo(0.5);
+    //fruit.scale.setTo(0.5);
     this.mapData.addThing(fruit, dataX, dataY);
   }
 
