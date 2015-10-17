@@ -10,6 +10,7 @@ Dawning.IsoMap = class IsoMap {
     this.gutter = 5; // unknown gap
     this.halfFieldSize = this.fieldSize / 2;
     this.mapSize = this.size * this.fieldSize;
+    this.needsTopologicalSort = false;
 
     this.mapData = new Dawning.MapData(this);
     this.visability = new Dawning.Visability(this.mapData);
@@ -140,7 +141,18 @@ Dawning.IsoMap = class IsoMap {
   update(){
     this.collisionDetection();
     this.inputHandler.moveWithCursor(this.man);
-    this.game.iso.topologicalSort(this.isoGroup);
+    this.topologicalSort();
+  }
+
+  positionChanged(){
+    this.needsTopologicalSort = true;
+  }
+
+  topologicalSort(){
+    if(this.needsTopologicalSort){
+      this.game.iso.topologicalSort(this.isoGroup);
+    }
+    this.needsTopologicalSort = false;
   }
 
   collisionDetection(){
