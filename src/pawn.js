@@ -52,15 +52,9 @@ Dawning.Pawn = class Pawn {
         }
       });
     });
-    this.map.mapData.getField(x, y + 1).obstacles.forEach((obstacle) => {
-      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
-    });
-    this.map.mapData.getField(x + 1, y + 1).obstacles.forEach((obstacle) => {
-      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
-    });
-    this.map.mapData.getField(x + 1, y).obstacles.forEach((obstacle) => {
-      this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
-    });
+    this.map.mapData.lookBehindField(x, y + 1);
+    this.map.mapData.lookBehindField(x + 1, y + 1);
+    this.map.mapData.lookBehindField(x + 1, y);
   }
 
 }

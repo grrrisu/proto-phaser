@@ -225,6 +225,15 @@ Dawning.MapData = class MapData {
     })
   }
 
+  lookBehindField(x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.obstacles.forEach((obstacle) => {
+        this.game.add.tween(obstacle).to({alpha: 0.5}, 500, Phaser.Easing.Quadratic.InOut, true);
+      });
+    }
+  }
+
   setVisible(x, y, value){
     if (this.fields[y] !== undefined){
       if (this.fields[y][x] !== undefined){
