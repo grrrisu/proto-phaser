@@ -33,14 +33,8 @@ Dawning.IsoMap = class IsoMap {
     this.game.load.image('field', 'images/iso_field.png');
     this.game.load.image('grass', 'images/iso_grass.png');
 
-    this.game.load.image('tree1', 'images/jungle_tree_1.png');
-    this.game.load.image('tree2', 'images/jungle_tree_2.png');
-    this.game.load.image('tree3', 'images/jungle_tree_3.png');
-    this.game.load.image('tree4', 'images/jungle_tree_4.png');
+    this.game.load.atlasJSONHash('tree', 'images/trees.png', 'images/trees.json');
 
-    this.game.load.image('banana1', 'images/palm_1.png');
-    this.game.load.image('banana2', 'images/banana-2@2x.png');
-    this.game.load.image('banana3', 'images/banana-3@2x.png');
     this.game.load.image('leopard', 'images/leopard@2x.png');
 
     this.mapData.createData(Dawning.Data.map3);
@@ -97,7 +91,7 @@ Dawning.IsoMap = class IsoMap {
 
   createTree(x, y, dataX, dataY){
     var num  = this.game.rnd.integerInRange(1, 4);
-    var tree = this.game.add.isoSprite(x -10, y -10, 0, ('tree'+num), 0, this.isoGroup);
+    var tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'jungle_tree_'+num+'.png', this.isoGroup);
     this.forest.push(tree);
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
@@ -106,11 +100,13 @@ Dawning.IsoMap = class IsoMap {
   }
 
   createFruit(x, y, dataX, dataY, type) {
-    var fruit = this.game.add.isoSprite(x, y, 0, 'banana'+type, 0, this.isoGroup);
+    var fruit = this.game.add.isoSprite(x, y, 0, 'tree', 'palm_'+type+'.png', this.isoGroup);
+    //fruit.animations.add('full', [3 + 2 * parseInt(type)], 60, false, true);
+    fruit.animations.add('empty', [(parseInt(type) * 2 + 3)], 60, false, true);
     this.fruits.push(fruit);
     this.game.physics.isoArcade.enable(fruit);
+    fruit.body.immovable = true;
     fruit.anchor.set(0.5);
-    //fruit.scale.setTo(0.5);
     this.mapData.addThing(fruit, dataX, dataY);
   }
 
@@ -158,8 +154,8 @@ Dawning.IsoMap = class IsoMap {
   collisionDetection(){
     this.game.physics.isoArcade.collide(this.man.man, this.floorGroup);
     this.game.physics.isoArcade.collide(this.man.man, this.forest);
+    this.game.physics.isoArcade.collide(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
 
-    this.game.physics.isoArcade.overlap(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
     // this.game.physics.isoArcade.overlap(this.man.man, this.herbivors, this.rabbitBuilder.escape, null, this.rabbitBuilder);
     this.game.physics.isoArcade.overlap(this.man.man, this.predators, this.dawning.attacked, null, this.dawning);
   }

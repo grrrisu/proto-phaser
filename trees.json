@@ -1,0 +1,102 @@
+{"frames": {
+
+"jungle_tree_1.png":
+{
+	"frame": {"x":2,"y":2,"w":111,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":128},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"jungle_tree_2.png":
+{
+	"frame": {"x":2,"y":392,"w":111,"h":125},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":3,"w":111,"h":125},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"jungle_tree_3.png":
+{
+	"frame": {"x":2,"y":132,"w":111,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":128},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"jungle_tree_4.png":
+{
+	"frame": {"x":2,"y":262,"w":111,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":128},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_1.png":
+{
+	"frame": {"x":2,"y":1095,"w":76,"h":96},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":17,"y":32,"w":76,"h":96},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_1_0.png":
+{
+	"frame": {"x":2,"y":1018,"w":75,"h":98},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":18,"y":30,"w":75,"h":98},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_2.png":
+{
+	"frame": {"x":2,"y":768,"w":99,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":5,"w":99,"h":123},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_2_0.png":
+{
+	"frame": {"x":2,"y":893,"w":99,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":5,"w":99,"h":123},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_3.png":
+{
+	"frame": {"x":2,"y":519,"w":110,"h":123},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":5,"w":110,"h":123},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"palm_3_0.png":
+{
+	"frame": {"x":2,"y":644,"w":110,"h":122},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":6,"w":110,"h":122},
+	"sourceSize": {"w":111,"h":128},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "trees.png",
+	"format": "RGBA8888",
+	"size": {"w":115,"h":1173},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e429d27c6993f0d61b679c1022247ab2:0f15e2abe76957c84a58cdccf960d4a1:ead410b59bd7de5235399502333842d0$"
+}
+}

@@ -46,19 +46,18 @@ Dawning.Game = class Game {
   }
 
   collectBanana(man, banana) {
-    switch (banana.key) {
-      case 'banana1':
+    switch (banana.frame) {
+      case 4:
         this.incFood(10);
         break;
-      case 'banana2':
+      case 6:
         this.incFood(25);
         break;
-      case 'banana3':
+      case 8:
         this.incFood(60);
         break;
     }
-    this.map.mapData.removeThing(banana);
-    banana.kill();
+    banana.animations.play('empty');
   }
 
   attacked(man, leopard){
