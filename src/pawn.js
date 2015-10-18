@@ -5,7 +5,7 @@ Dawning.Pawn = class Pawn {
   constructor(map){
     this.map = map;
     this.game = map.game;
-    this.padding = 25;
+    this.padding = 10;
   }
 
   preload(){
@@ -13,7 +13,7 @@ Dawning.Pawn = class Pawn {
   }
 
   createMan(x, y, dataX, dataY) {
-    this.man = this.game.add.isoSprite(x - this.padding, y - this.padding, 0, 'pawn', 0, this.map.isoGroup);
+    this.man = this.game.add.isoSprite(x + this.padding, y + this.padding, 0, 'pawn', 0, this.map.isoGroup);
     this.man.anchor.set(0.5);
 
     this.man.animations.add('standing', [0], 5, false, true);
