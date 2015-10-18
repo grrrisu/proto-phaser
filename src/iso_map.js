@@ -68,7 +68,7 @@ Dawning.IsoMap = class IsoMap {
       var pos = this.mapPosition(x, y);
       this.createGrass(pos.x, pos.y, x, y);
       if (field.wall){
-        this.createTree(pos.x, pos.y, x, y);
+        this.createTree(pos.x, pos.y, x, y, field.wall);
       } else {
         if(field.fruit){
           this.createFruit(pos.x, pos.y, x, y, field.fruit);
@@ -89,9 +89,15 @@ Dawning.IsoMap = class IsoMap {
     this.mapData.addFloor(floorTile, dataX, dataY);
   }
 
-  createTree(x, y, dataX, dataY){
-    var num  = this.game.rnd.integerInRange(1, 4);
-    var tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'jungle_tree_'+num+'.png', this.isoGroup);
+  createTree(x, y, dataX, dataY, type){
+    var tree;
+    if(type == 'X'){
+      var num  = this.game.rnd.integerInRange(1, 4);
+      tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'jungle_tree_'+num+'.png', this.isoGroup);
+    } else if(type == 'x'){
+      tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'bush_1.png', this.isoGroup);
+    }
+
     this.forest.push(tree);
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
@@ -102,7 +108,7 @@ Dawning.IsoMap = class IsoMap {
   createFruit(x, y, dataX, dataY, type) {
     var fruit = this.game.add.isoSprite(x, y, 0, 'tree', 'palm_'+type+'.png', this.isoGroup);
     //fruit.animations.add('full', [3 + 2 * parseInt(type)], 60, false, true);
-    fruit.animations.add('empty', [(parseInt(type) * 2 + 3)], 60, false, true);
+    fruit.animations.add('empty', [(parseInt(type) * 2 + 4)], 60, false, true);
     this.fruits.push(fruit);
     this.game.physics.isoArcade.enable(fruit);
     fruit.body.immovable = true;

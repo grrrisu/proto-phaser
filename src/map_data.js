@@ -17,7 +17,7 @@ Dawning.MapData = class MapData {
         field = {
           x: x,
           y: y,
-          wall: data[y][x] == 'x',
+          wall: this.parseWall(data[y][x]),
           fruit: this.parseFruit(data[y][x]),
           herbivor: data[y][x] == 'R',
           predator: data[y][x] == 'L',
@@ -88,6 +88,12 @@ Dawning.MapData = class MapData {
   parseFruit(fruit){
     if (fruit == '1' || fruit == '2' || fruit == '3'){
       return fruit;
+    }
+  }
+
+  parseWall(wall){
+    if (wall == 'X' || wall == 'x'){
+      return wall;
     }
   }
 
