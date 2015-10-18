@@ -47,13 +47,13 @@ Dawning.Game = class Game {
 
   collectBanana(man, banana) {
     switch (banana.frame) {
-      case 4:
+      case 5:
         this.incFood(10);
         break;
-      case 6:
+      case 7:
         this.incFood(25);
         break;
-      case 8:
+      case 9:
         this.incFood(60);
         break;
     }
