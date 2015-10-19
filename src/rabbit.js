@@ -47,7 +47,7 @@ Dawning.Rabbit = class Rabbit {
     var tween = this.game.add.tween(rabbit).to({isoX: newPos.x - this.padding, isoY: newPos.y - this.padding}, 3500, Phaser.Easing.Quadratic.InOut, true, delay); // what, duration, easing, autostart, delay
     tween.onStart.add(this.startRabbit, this);
     tween.onUpdateCallback(() => {
-      if(this.isVisible){
+      if(this.isVisible(rabbit)){
         this.map.positionChanged();
       }
     });
@@ -72,7 +72,7 @@ Dawning.Rabbit = class Rabbit {
     //rabbit.animations.play('Walk', 24, true);
   }
 
-  isVisible(){
+  isVisible(rabbit){
     var rpos = this.map.relativePosition(rabbit.isoX + this.padding, rabbit.isoY + this.padding);
     return this.map.visability.isVisible(Math.round(rpos.x), Math.round(rpos.y));
   }

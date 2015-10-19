@@ -152,8 +152,9 @@ Dawning.IsoMap = class IsoMap {
   topologicalSort(){
     if(this.needsTopologicalSort){
       this.game.iso.topologicalSort(this.isoGroup);
+      this.needsTopologicalSort = false;
     }
-    this.needsTopologicalSort = false;
+
   }
 
   collisionDetection(){
