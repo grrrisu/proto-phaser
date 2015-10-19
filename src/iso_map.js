@@ -45,10 +45,9 @@ Dawning.IsoMap = class IsoMap {
   create() {
 
     this.floorGroup = this.game.add.group();
-    this.floorGroup.enableBody = true;
-    this.floorGroup.physicsBodyType = Phaser.Plugin.Isometric.ISOARCADE;
-
     this.isoGroup = this.game.add.group();
+
+    this.game.physics.isoArcade.gravity.setTo(0, 0, -500);
 
     this.forest  = [];
     this.fruits = [];
@@ -66,7 +65,7 @@ Dawning.IsoMap = class IsoMap {
   createFields(){
     this.mapData.eachField((field, x, y) => {
       var pos = this.mapPosition(x, y);
-      this.createGrass(pos.x, pos.y, x, y);
+      this.createFloor(pos.x, pos.y, x, y);
       if (field.wall){
         this.createTree(pos.x, pos.y, x, y, field.wall);
       } else {
@@ -81,11 +80,9 @@ Dawning.IsoMap = class IsoMap {
     });
   }
 
-  createGrass(x, y, dataX, dataY){
+  createFloor(x, y, dataX, dataY){
     var floorTile = this.game.add.isoSprite(x + 40, y + 40, 1, 'grass', 0, this.floorGroup);
     floorTile.anchor.set(0.5);
-    this.game.physics.isoArcade.enable(floorTile);
-    floorTile.body.immovable = true;
     this.mapData.addFloor(floorTile, dataX, dataY);
   }
 
@@ -102,16 +99,17 @@ Dawning.IsoMap = class IsoMap {
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
     tree.body.immovable = true;
+    tree.body.collideWorldBounds = true;
     this.mapData.addObstacle(tree, dataX, dataY);
   }
 
   createFruit(x, y, dataX, dataY, type) {
     var fruit = this.game.add.isoSprite(x, y, 0, 'tree', 'palm_'+type+'.png', this.isoGroup);
-    //fruit.animations.add('full', [3 + 2 * parseInt(type)], 60, false, true);
     fruit.animations.add('empty', [(parseInt(type) * 2 + 4)], 60, false, true);
     this.fruits.push(fruit);
     this.game.physics.isoArcade.enable(fruit);
     fruit.body.immovable = true;
+    fruit.body.collideWorldBounds = true;
     fruit.anchor.set(0.5);
     this.mapData.addThing(fruit, dataX, dataY);
   }
@@ -120,6 +118,7 @@ Dawning.IsoMap = class IsoMap {
     var leopard = this.game.add.isoSprite(x -10, y -10, 0, 'leopard', 0, this.isoGroup);
     this.predators.push(leopard);
     this.game.physics.isoArcade.enable(leopard);
+    leopard.body.collideWorldBounds = true;
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.5);
     this.mapData.addThing(leopard, dataX, dataY);
