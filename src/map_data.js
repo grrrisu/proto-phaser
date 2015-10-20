@@ -57,6 +57,14 @@ Dawning.MapData = class MapData {
     }
   }
 
+  addPredator(sprite, x, y){
+    var field = this.getField(x, y);
+    if(field){
+      field.predator = sprite;
+      sprite.field = field;
+    }
+  }
+
   removeFloor(sprite){
     var field = sprite.field;
     var pos = field.floors.indexOf(sprite);
@@ -80,6 +88,14 @@ Dawning.MapData = class MapData {
     var pos = field.things.indexOf(sprite);
     if (pos > -1){
       field.things.splice(pos, 1);
+      sprite.field = null;
+    }
+  }
+
+  removePredator(sprite){
+    var field = sprite.field;
+    if (field) {
+      field.predator = null;
       sprite.field = null;
     }
   }

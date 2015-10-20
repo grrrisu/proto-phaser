@@ -15,6 +15,7 @@ Dawning.IsoMap = class IsoMap {
     this.mapData = new Dawning.MapData(this);
     this.visability = new Dawning.Visability(this.mapData);
     this.rabbitBuilder = new Dawning.Rabbit(this);
+    this.leopardBuilder = new Dawning.Leopard(this);
     this.pawnBuilder = new Dawning.Pawn(this);
     this.inputHandler = new Dawning.InputHandler(this);
     console.log(options);
@@ -72,7 +73,7 @@ Dawning.IsoMap = class IsoMap {
         if(field.fruit){
           this.createFruit(pos.x, pos.y, x, y, field.fruit);
         } else if(field.predator){
-          this.createLeopard(pos.x, pos.y, x, y);
+          this.leopardBuilder.createLeopard(pos.x, pos.y, x, y);
         } else if(field.herbivor){
           this.rabbitBuilder.createRabbit(this.herbivors, pos.x, pos.y, x, y);
         }
@@ -114,15 +115,7 @@ Dawning.IsoMap = class IsoMap {
     this.mapData.addThing(fruit, dataX, dataY);
   }
 
-  createLeopard(x, y, dataX, dataY){
-    var leopard = this.game.add.isoSprite(x -10, y -10, 0, 'leopard', 0, this.isoGroup);
-    this.predators.push(leopard);
-    this.game.physics.isoArcade.enable(leopard);
-    leopard.body.collideWorldBounds = true;
-    leopard.anchor.set(0.5);
-    leopard.scale.setTo(0.5);
-    this.mapData.addThing(leopard, dataX, dataY);
-  }
+
 
   mapPosition(x, y){
     return {

@@ -4,6 +4,7 @@ import { InputHandler} from './inputHandler';
 import { Fog } from './fog';
 import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
+import { Leopard } from './leopard';
 import { MapData } from './map_data';
 import { Visability} from './visability';
 import { Map } from './map';

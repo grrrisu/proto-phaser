@@ -62,7 +62,7 @@ Dawning.Game = class Game {
 
   attacked(man, leopard){
     man.kill();
-    // GAME OVER!
+    console.log("GAME OVER!");
   }
 
   incFood(amount){
