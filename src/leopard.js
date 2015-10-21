@@ -56,23 +56,23 @@ Dawning.Leopard = class Leopard {
     }
   }
 
-  huntX(leopard, prey, rpos){
+  huntX(leopard, prey, rpos, secondTry){
     if(rpos.x > prey.x && !this.map.mapData.isWall(rpos.x - 1, rpos.y)){
       this.moveTo(leopard, rpos.x - 1, rpos.y);
     } else if(rpos.x < prey.x && !this.map.mapData.isWall(rpos.x + 1, rpos.y)) {
       this.moveTo(leopard, rpos.x + 1, rpos.y);
-    } else {
-      this.huntY(leopard, prey, rpos);
+    } else if(!secondTry){
+      this.huntY(leopard, prey, rpos, true);
     }
   }
 
-  huntY(leopard, prey, rpos){
+  huntY(leopard, prey, rpos, secondTry){
     if(rpos.y > prey.y && !this.map.mapData.isWall(rpos.x, rpos.y - 1)){
       this.moveTo(leopard, rpos.x, rpos.y - 1);
     } else if(rpos.y < prey.y && !this.map.mapData.isWall(rpos.x, rpos.y + 1)){
       this.moveTo(leopard, rpos.x, rpos.y + 1);
-    } else {
-      this.huntX(leopard, prey, rpos);
+    } else if(secondTry){
+      this.huntX(leopard, prey, rpos, true);
     }
   }
 
