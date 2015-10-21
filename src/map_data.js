@@ -54,23 +54,9 @@ Dawning.MapData = class MapData {
     if(field){
       field.things.push(sprite);
       sprite.field = field;
-    }
-  }
-
-  addPredator(sprite, x, y){
-    var field = this.getField(x, y);
-    if(field){
-      field.predator = sprite;
-      sprite.field = field;
-    }
-  }
-
-  removeFloor(sprite){
-    var field = sprite.field;
-    var pos = field.floors.indexOf(sprite);
-    if (pos > -1){
-      field.floors.splice(pos, 1);
-      sprite.field = null;
+    } else {
+      console.log("WARN: outside x:"+x+", y:"+y);
+      console.log(sprite);
     }
   }
 
@@ -91,15 +77,6 @@ Dawning.MapData = class MapData {
       sprite.field = null;
     }
   }
-
-  removePredator(sprite){
-    var field = sprite.field;
-    if (field) {
-      field.predator = null;
-      sprite.field = null;
-    }
-  }
-
 
   parseFruit(fruit){
     if (fruit == '1' || fruit == '2' || fruit == '3'){
@@ -133,9 +110,15 @@ Dawning.MapData = class MapData {
     return callback(this.fields[y][x]);
   }
 
-  isWall(x, y){
+  blocksVisability(x, y){
     return this.fieldProperty(x, y, true, function(field){
       return field.wall == 'X';
+    });
+  }
+
+  isWall(x, y){
+    return this.fieldProperty(x, y, false, function(field){
+      return field.wall;
     });
   }
 
@@ -155,7 +138,7 @@ Dawning.MapData = class MapData {
 
         callback(landingX, landingY);
 
-        if(this.isWall(landingX, landingY)){
+        if(this.blocksVisability(landingX, landingY)){
           break;
         }
       }

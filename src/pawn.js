@@ -5,7 +5,7 @@ Dawning.Pawn = class Pawn {
   constructor(map){
     this.map = map;
     this.game = map.game;
-    this.padding = 10;
+    this.padding = 30;
   }
 
   preload(){

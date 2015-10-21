@@ -91,9 +91,9 @@ Dawning.IsoMap = class IsoMap {
     var tree;
     if(type == 'X'){
       var num  = this.game.rnd.integerInRange(1, 4);
-      tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'jungle_tree_'+num+'.png', this.isoGroup);
+      tree = this.game.add.isoSprite(x, y, 0, 'tree', 'jungle_tree_'+num+'.png', this.isoGroup);
     } else if(type == 'x'){
-      tree = this.game.add.isoSprite(x -10, y -10, 0, 'tree', 'bush_1.png', this.isoGroup);
+      tree = this.game.add.isoSprite(x, y, 0, 'tree', 'bush_1.png', this.isoGroup);
     }
 
     this.forest.push(tree);
@@ -114,8 +114,6 @@ Dawning.IsoMap = class IsoMap {
     fruit.anchor.set(0.5);
     this.mapData.addThing(fruit, dataX, dataY);
   }
-
-
 
   mapPosition(x, y){
     return {
