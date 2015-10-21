@@ -11,6 +11,9 @@ Dawning.MapData = class MapData {
     }
   }
 
+  // floors: no physics, no collision, darken if not visible
+  // obstacles: collision detection, darken if not visible
+  // things: collision detection, hidden if not visible
   createData(data){
     data.forEach((row, y) => {
       row.forEach((field, x) => {

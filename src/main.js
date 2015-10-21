@@ -2,6 +2,7 @@ import { Dawning } from './namespace';
 import { Data } from './data/maps.js';
 import { InputHandler} from './inputHandler';
 import { Fog } from './fog';
+import { Thing } from './thing';
 import { Pawn } from './pawn';
 import { Rabbit } from './rabbit';
 import { Leopard } from './leopard';

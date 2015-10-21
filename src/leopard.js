@@ -1,8 +1,9 @@
 import { Dawning } from './namespace';
 
-Dawning.Leopard = class Leopard {
+Dawning.Leopard = class Leopard extends Dawning.Thing {
 
   constructor(map){
+    super();
     this.map = map;
     this.game = map.game;
     this.padding = 25;
@@ -92,7 +93,6 @@ Dawning.Leopard = class Leopard {
   }
 
   startLeopard(leopard){
-    //this.map.mapData.removePredator(leopard);
   }
 
   stopLeopard(leopard){
@@ -100,20 +100,6 @@ Dawning.Leopard = class Leopard {
     // leopard.body.velocity.y = 0;
     leopard.moving = false;
     this.think(leopard);
-  }
-
-  updatePosition(sprite, x, y, map){
-    if(sprite.field.x != x || sprite.field.x != y){
-      map.mapData.removeThing(sprite);
-      this.setPosition(sprite, x, y, map);
-      map.positionChanged();
-    }
-  }
-
-  setPosition(sprite, x, y, map){
-    var field = this.map.mapData.getField(x, y);
-    map.mapData.addThing(sprite, x, y);
-    map.visability.applyThingVisability(x, y);
   }
 
 }
