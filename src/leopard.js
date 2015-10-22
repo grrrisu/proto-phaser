@@ -10,6 +10,15 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
     this.leopards = [];
   }
 
+  preload(){
+    console.log("preload leopard");
+    this.game.load.audio('roaring', 'audio/Mountain_Lion.mp3');
+  }
+
+  create(){
+    this.roaring = this.game.add.audio('roaring', 1.0,  false);
+  }
+
   createLeopard(isoX, isoY, dataX, dataY){
     var leopard = this.game.add.isoSprite(isoX + this.padding, isoY + this.padding, 0, 'leopard', 0, this.map.isoGroup);
     this.map.predators.push(leopard);
@@ -32,8 +41,11 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
       console.log("leo:",rpos.x,rpos.y);
       var prey = this.lookAround(leopard, rpos);
       if (prey){
-        console.log("prey", prey.x, prey.y);
+        if (!leopard.hunting) this.roaring.play();
+        leopard.hunting = true;
         this.hunt(leopard, prey, rpos);
+      } else {
+        leopard.hunting = false;
       }
     }
   }

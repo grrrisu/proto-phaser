@@ -40,10 +40,12 @@ Dawning.IsoMap = class IsoMap {
 
     this.mapData.createData(Dawning.Data.map3);
     this.rabbitBuilder.preload();
+    this.leopardBuilder.preload();
     this.pawnBuilder.preload();
   }
 
   create() {
+    this.leopardBuilder.create();
 
     this.floorGroup = this.game.add.group();
     this.isoGroup = this.game.add.group();
