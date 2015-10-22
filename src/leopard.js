@@ -7,23 +7,26 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
     this.map = map;
     this.game = map.game;
     this.padding = 25;
-    this.leopards = [];
+    this.speed = 100;
   }
 
   preload(){
-    console.log("preload leopard");
     this.game.load.audio('roaring', 'audio/Mountain_Lion.mp3');
   }
 
   create(){
     this.roaring = this.game.add.audio('roaring', 1.0,  false);
+    this.timer = this.game.time.create(false);
   }
 
   createLeopard(isoX, isoY, dataX, dataY){
     var leopard = this.game.add.isoSprite(isoX + this.padding, isoY + this.padding, 0, 'leopard', 0, this.map.isoGroup);
     this.map.predators.push(leopard);
-    //this.game.physics.isoArcade.enable(leopard);
-    //leopard.body.collideWorldBounds = true;
+
+    this.game.physics.isoArcade.enable(leopard);
+    leopard.enableBody = true;
+    leopard.body.collideWorldBounds = true;
+
     leopard.anchor.set(0.5);
     leopard.scale.setTo(0.8);
     this.setPosition(leopard, dataX, dataY, this.map);
@@ -62,6 +65,7 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   hunt(leopard, prey, rpos){
+    leopard.moving = true;
     if(Math.abs(rpos.x - prey.x) > Math.abs(rpos.y - prey.y)){
       this.huntX(leopard, prey, rpos);
     } else {
@@ -71,9 +75,9 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
 
   huntX(leopard, prey, rpos, secondTry){
     if(rpos.x > prey.x && !this.map.mapData.isWall(rpos.x - 1, rpos.y)){
-      this.moveTo(leopard, rpos.x - 1, rpos.y);
+      this.moveLeft(leopard);
     } else if(rpos.x < prey.x && !this.map.mapData.isWall(rpos.x + 1, rpos.y)) {
-      this.moveTo(leopard, rpos.x + 1, rpos.y);
+      this.moveRight(leopard);
     } else if(!secondTry){
       this.huntY(leopard, prey, rpos, true);
     }
@@ -81,17 +85,56 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
 
   huntY(leopard, prey, rpos, secondTry){
     if(rpos.y > prey.y && !this.map.mapData.isWall(rpos.x, rpos.y - 1)){
-      this.moveTo(leopard, rpos.x, rpos.y - 1);
+      this.moveUp(leopard);
     } else if(rpos.y < prey.y && !this.map.mapData.isWall(rpos.x, rpos.y + 1)){
-      this.moveTo(leopard, rpos.x, rpos.y + 1);
+      this.moveDown(leopard);
     } else if(secondTry){
       this.huntX(leopard, prey, rpos, true);
     }
   }
 
+  moveLeft(leopard){
+    leopard.body.velocity.y = 0;
+    leopard.body.velocity.x = -this.speed;
+    this.startMovement(leopard);
+  }
+
+  moveRight(leopard){
+    leopard.body.velocity.y = 0;
+    leopard.body.velocity.x = this.speed;
+    this.startMovement(leopard);
+  }
+
+  moveUp(leopard){
+    leopard.body.velocity.y = -this.speed;
+    leopard.body.velocity.x = 0;
+    this.startMovement(leopard);
+  }
+
+  moveDown(leopard){
+    leopard.body.velocity.y = this.speed;
+    leopard.body.velocity.x = 0;
+    this.startMovement(leopard);
+  }
+
+  startMovement(leopard){
+    this.timer.add(500, this.nextMovement, this, leopard);
+    this.timer.start();
+  }
+
+  nextMovement(leopard){
+    console.log("*");
+    var rpos = this.map.relativePosition(leopard.isoX - this.padding, leopard.isoY - this.padding);
+    var x = Math.round(rpos.x);
+    var y = Math.round(rpos.y);
+    this.updatePosition(leopard, x, y, this.map);
+
+    leopard.moving = false;
+    this.think(leopard);
+  }
+
   moveTo(leopard, x, y){
     leopard.moving = true;
-    console.log("move",x,y);
     var pos = this.map.mapPosition(x, y);
     var tween = this.game.add.tween(leopard).to({isoX: pos.x + this.padding, isoY: pos.y + this.padding}, 1500, Phaser.Easing.Linear.InOut, true); // what, duration, easing, autostart, delay
     tween.onStart.add(this.startLeopard, this);
@@ -108,8 +151,6 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   stopLeopard(leopard){
-    // leopard.body.velocity.x = 0;
-    // leopard.body.velocity.y = 0;
     leopard.moving = false;
     this.think(leopard);
   }

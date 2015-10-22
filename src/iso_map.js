@@ -147,12 +147,15 @@ Dawning.IsoMap = class IsoMap {
       this.game.iso.topologicalSort(this.isoGroup);
       this.needsTopologicalSort = false;
     }
-
   }
 
   collisionDetection(){
     this.game.physics.isoArcade.collide(this.man.man, this.floorGroup);
-    this.game.physics.isoArcade.collide(this.man.man, this.forest);
+    this.game.physics.isoArcade.collide(this.man.man, this.forest, this.foo, null, this);
+    this.predators.forEach((predator) => {
+      this.game.physics.isoArcade.collide(predator, this.forest);
+    });
+
     this.game.physics.isoArcade.collide(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
 
     // this.game.physics.isoArcade.overlap(this.man.man, this.herbivors, this.rabbitBuilder.escape, null, this.rabbitBuilder);
