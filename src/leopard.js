@@ -41,11 +41,14 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   think(leopard){
     if (!leopard.moving){
       var rpos = this.map.relativePosition(leopard.isoX - this.padding, leopard.isoY - this.padding);
+      rpos = {x: Math.round(rpos.x), y: Math.round(rpos.y)}
       console.log("leo:",rpos.x,rpos.y);
+
       var prey = this.lookAround(leopard, rpos);
       if (prey){
         if (!leopard.hunting) this.roaring.play();
         leopard.hunting = true;
+        leopard.moving = true;
         this.hunt(leopard, prey, rpos);
       } else {
         leopard.hunting = false;
@@ -65,7 +68,6 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   hunt(leopard, prey, rpos){
-    leopard.moving = true;
     if(Math.abs(rpos.x - prey.x) > Math.abs(rpos.y - prey.y)){
       this.huntX(leopard, prey, rpos);
     } else {
@@ -80,6 +82,8 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
       this.moveRight(leopard);
     } else if(!secondTry){
       this.huntY(leopard, prey, rpos, true);
+    } else {
+      leopard.moving = false;
     }
   }
 
@@ -90,28 +94,34 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
       this.moveDown(leopard);
     } else if(secondTry){
       this.huntX(leopard, prey, rpos, true);
+    } else {
+      leopard.moving = false;
     }
   }
 
   moveLeft(leopard){
+    console.log("left");
     leopard.body.velocity.y = 0;
     leopard.body.velocity.x = -this.speed;
     this.startMovement(leopard);
   }
 
   moveRight(leopard){
+    console.log("right");
     leopard.body.velocity.y = 0;
     leopard.body.velocity.x = this.speed;
     this.startMovement(leopard);
   }
 
   moveUp(leopard){
+    console.log("up");
     leopard.body.velocity.y = -this.speed;
     leopard.body.velocity.x = 0;
     this.startMovement(leopard);
   }
 
   moveDown(leopard){
+    console.log("down");
     leopard.body.velocity.y = this.speed;
     leopard.body.velocity.x = 0;
     this.startMovement(leopard);
@@ -123,7 +133,7 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   nextMovement(leopard){
-    console.log("*");
+    console.log(leopard );
     var rpos = this.map.relativePosition(leopard.isoX - this.padding, leopard.isoY - this.padding);
     var x = Math.round(rpos.x);
     var y = Math.round(rpos.y);
