@@ -61,7 +61,10 @@ Dawning.Game = class Game {
   }
 
   attacked(man, leopard){
+    this.map.leopardBuilder.roaring.play();
     man.kill();
+    leopard.body.velocity.x = 0;
+    leopard.body.velocity.y = 0;
     console.log("GAME OVER!");
   }
 

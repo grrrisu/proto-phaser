@@ -51,6 +51,7 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
         leopard.moving = true;
         this.hunt(leopard, prey, rpos);
       } else {
+        console.log('stop hunting');
         leopard.hunting = false;
       }
     }
@@ -58,12 +59,15 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
 
   lookAround(leopard, rpos) {
     var prey;
+    var fieldCount = 0;
     this.map.mapData.rayCast(rpos, 4, (x, y) => {
+      fieldCount++;
       var field = this.map.mapData.getField(x, y);
       if (field && field.pawn) {
         prey = {x: x, y: y, prey: field.pawn};
       }
     });
+    if(fieldCount > 2) console.log("blind!");
     return prey;
   }
 
@@ -76,11 +80,14 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   huntX(leopard, prey, rpos, secondTry){
-    if(rpos.x > prey.x && !this.map.mapData.isWall(rpos.x - 1, rpos.y)){
+    if(leopard.isoX > prey.prey.man.isoX && !this.blockedInDirection(leopard, 'x')){
+      leopard.previousDirection = 'x';
       this.moveLeft(leopard);
-    } else if(rpos.x < prey.x && !this.map.mapData.isWall(rpos.x + 1, rpos.y)) {
+    } else if(leopard.isoX < prey.prey.man.isoX && !this.blockedInDirection(leopard, 'x')) {
+      leopard.previousDirection = 'x';
       this.moveRight(leopard);
     } else if(!secondTry){
+      leopard.blockedByWall = false;
       this.huntY(leopard, prey, rpos, true);
     } else {
       leopard.moving = false;
@@ -88,52 +95,58 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
   }
 
   huntY(leopard, prey, rpos, secondTry){
-    if(rpos.y > prey.y && !this.map.mapData.isWall(rpos.x, rpos.y - 1)){
+    if(leopard.isoY > prey.prey.man.isoY && !this.blockedInDirection(leopard, 'y')){
+      leopard.previousDirection = 'y';
       this.moveUp(leopard);
-    } else if(rpos.y < prey.y && !this.map.mapData.isWall(rpos.x, rpos.y + 1)){
+    } else if(leopard.isoY < prey.prey.man.isoY && !this.blockedInDirection(leopard, 'y')){
+      leopard.previousDirection = 'y';
       this.moveDown(leopard);
-    } else if(secondTry){
+    } else if(!secondTry){
+      leopard.blockedByWall = false;
       this.huntX(leopard, prey, rpos, true);
     } else {
       leopard.moving = false;
     }
   }
 
+  blockedInDirection(leopard, direction){
+    if(leopard.blockedByWall){
+      return leopard.previousDirection == direction;
+    } else {
+      return false;
+    }
+  }
+
   moveLeft(leopard){
-    console.log("left");
     leopard.body.velocity.y = 0;
     leopard.body.velocity.x = -this.speed;
     this.startMovement(leopard);
   }
 
   moveRight(leopard){
-    console.log("right");
     leopard.body.velocity.y = 0;
     leopard.body.velocity.x = this.speed;
     this.startMovement(leopard);
   }
 
   moveUp(leopard){
-    console.log("up");
     leopard.body.velocity.y = -this.speed;
     leopard.body.velocity.x = 0;
     this.startMovement(leopard);
   }
 
   moveDown(leopard){
-    console.log("down");
     leopard.body.velocity.y = this.speed;
     leopard.body.velocity.x = 0;
     this.startMovement(leopard);
   }
 
   startMovement(leopard){
-    this.timer.add(500, this.nextMovement, this, leopard);
+    this.timer.add(50, this.nextMovement, this, leopard);
     this.timer.start();
   }
 
   nextMovement(leopard){
-    console.log(leopard );
     var rpos = this.map.relativePosition(leopard.isoX - this.padding, leopard.isoY - this.padding);
     var x = Math.round(rpos.x);
     var y = Math.round(rpos.y);
@@ -143,26 +156,8 @@ Dawning.Leopard = class Leopard extends Dawning.Thing {
     this.think(leopard);
   }
 
-  moveTo(leopard, x, y){
-    leopard.moving = true;
-    var pos = this.map.mapPosition(x, y);
-    var tween = this.game.add.tween(leopard).to({isoX: pos.x + this.padding, isoY: pos.y + this.padding}, 1500, Phaser.Easing.Linear.InOut, true); // what, duration, easing, autostart, delay
-    tween.onStart.add(this.startLeopard, this);
-    tween.onUpdateCallback(() => {
-      var rpos = this.map.relativePosition(leopard.isoX - this.padding, leopard.isoY - this.padding);
-      var x = Math.round(rpos.x);
-      var y = Math.round(rpos.y);
-      this.updatePosition(leopard, x, y, this.map);
-    });
-    tween.onComplete.add(this.stopLeopard, this);
-  }
-
-  startLeopard(leopard){
-  }
-
-  stopLeopard(leopard){
-    leopard.moving = false;
-    this.think(leopard);
+  colliding(leopard, tree){
+    leopard.blockedByWall = true;
   }
 
 }

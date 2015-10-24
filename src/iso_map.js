@@ -151,9 +151,9 @@ Dawning.IsoMap = class IsoMap {
 
   collisionDetection(){
     this.game.physics.isoArcade.collide(this.man.man, this.floorGroup);
-    this.game.physics.isoArcade.collide(this.man.man, this.forest, this.foo, null, this);
+    this.game.physics.isoArcade.collide(this.man.man, this.forest);
     this.predators.forEach((predator) => {
-      this.game.physics.isoArcade.collide(predator, this.forest);
+      this.game.physics.isoArcade.collide(predator, this.forest, this.leopardBuilder.colliding, null, this.leopardBuilder);
     });
 
     this.game.physics.isoArcade.collide(this.man.man, this.fruits, this.dawning.collectBanana, null, this.dawning);
