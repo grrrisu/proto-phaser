@@ -29,7 +29,7 @@ Dawning.IsoMap = class IsoMap {
 	  this.game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
 
 	  // set the middle of the world in the middle of the screen
-	  this.game.iso.anchor.setTo(0.5, 0);
+	  this.game.iso.anchor.setTo(0.2, 0);
 
     this.game.load.image('field', 'images/iso_field.png');
     this.game.load.image('grass', 'images/iso_grass.png');
@@ -38,7 +38,7 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.load.image('leopard', 'images/leopard@2x.png');
 
-    this.mapData.createData(Dawning.Data.map3);
+    this.mapData.createData(Dawning.Data.superMini);
     this.rabbitBuilder.preload();
     this.leopardBuilder.preload();
     this.pawnBuilder.preload();
@@ -60,9 +60,13 @@ Dawning.IsoMap = class IsoMap {
     this.createFields();
     this.visability.lowlightAll();
 
-    var pos = this.mapPosition(12, 12);
-    this.man = this.pawnBuilder.createMan(pos.x, pos.y, 12, 12);
-    this.inputHandler.create();
+    console.log(this.game.iso);
+    this.game.iso.projectionAngle = 0.52;
+    window.isoProjection = this.game.iso;
+
+    // var pos = this.mapPosition(12, 12);
+    // this.man = this.pawnBuilder.createMan(pos.x, pos.y, 12, 12);
+    // this.inputHandler.create();
   }
 
   createFields(){
@@ -119,8 +123,8 @@ Dawning.IsoMap = class IsoMap {
 
   mapPosition(x, y){
     return {
-      x: x * this.fieldSize + y * this.gutter,
-      y: y * this.fieldSize + x * this.gutter
+      x: x * this.fieldSize, // + y * this.gutter,
+      y: y * this.fieldSize  // + x * this.gutter
     }
   }
 
@@ -133,9 +137,9 @@ Dawning.IsoMap = class IsoMap {
   }
 
   update(){
-    this.collisionDetection();
-    this.inputHandler.moveWithCursor(this.man);
-    this.topologicalSort();
+    // this.collisionDetection();
+    // this.inputHandler.moveWithCursor(this.man);
+    // this.topologicalSort();
   }
 
   positionChanged(){

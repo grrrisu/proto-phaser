@@ -9,6 +9,11 @@ Dawning.Data = {
   // R : rabbit
   // L : leopard
 
+  superMini: [
+    ['.', '.', '.'],
+    ['.', '.', '.']
+  ],
+
   map1:
     [
       ['X', 'X', 'X', 'X', 'X', 'X', 'X', '.', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
