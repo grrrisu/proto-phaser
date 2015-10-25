@@ -7,7 +7,6 @@ Dawning.IsoMap = class IsoMap {
     this.game    = dawning.game;
     this.size = options.size;
     this.fieldSize = options.fieldSize;
-    this.gutter = 5; // unknown gap
     this.halfFieldSize = this.fieldSize / 2;
     this.mapSize = this.size * this.fieldSize;
     this.needsTopologicalSort = false;
@@ -28,6 +27,7 @@ Dawning.IsoMap = class IsoMap {
 
 	  this.game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
 
+    this.game.iso.projectionAngle = 0.52;  // approximate value
 	  // set the middle of the world in the middle of the screen
 	  this.game.iso.anchor.setTo(0.2, 0);
 
@@ -38,7 +38,7 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.load.image('leopard', 'images/leopard@2x.png');
 
-    this.mapData.createData(Dawning.Data.superMini);
+    this.mapData.createData(Dawning.Data.map3);
     this.rabbitBuilder.preload();
     this.leopardBuilder.preload();
     this.pawnBuilder.preload();
@@ -60,13 +60,9 @@ Dawning.IsoMap = class IsoMap {
     this.createFields();
     this.visability.lowlightAll();
 
-    console.log(this.game.iso);
-    this.game.iso.projectionAngle = 0.52;
-    window.isoProjection = this.game.iso;
-
-    // var pos = this.mapPosition(12, 12);
-    // this.man = this.pawnBuilder.createMan(pos.x, pos.y, 12, 12);
-    // this.inputHandler.create();
+    var pos = this.mapPosition(12, 12);
+    this.man = this.pawnBuilder.createMan(pos.x, pos.y, 12, 12);
+    this.inputHandler.create();
   }
 
   createFields(){
@@ -123,23 +119,22 @@ Dawning.IsoMap = class IsoMap {
 
   mapPosition(x, y){
     return {
-      x: x * this.fieldSize, // + y * this.gutter,
-      y: y * this.fieldSize  // + x * this.gutter
+      x: x * this.fieldSize,
+      y: y * this.fieldSize
     }
   }
 
   relativePosition(x, y){
-    var divisor = Math.pow(this.fieldSize, 2) - Math.pow(this.gutter, 2);
     return {
-      x: (x * this.fieldSize - y * this.gutter) / divisor,
-      y: (y * this.fieldSize - x * this.gutter) / divisor
+      x: x / this.fieldSize,
+      y: y / this.fieldSize
     }
   }
 
   update(){
-    // this.collisionDetection();
-    // this.inputHandler.moveWithCursor(this.man);
-    // this.topologicalSort();
+    this.collisionDetection();
+    this.inputHandler.moveWithCursor(this.man);
+    this.topologicalSort();
   }
 
   positionChanged(){

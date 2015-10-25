@@ -17,6 +17,6 @@ Dawning.dungeon = new Dawning.Game(
     heidht: 600,
     element: '#game',
     size: 25,
-    fieldSize: 68
+    fieldSize: 65
   }
 );
