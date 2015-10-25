@@ -103,6 +103,8 @@ Dawning.IsoMap = class IsoMap {
     this.game.physics.isoArcade.enable(tree);
     tree.body.immovable = true;
     tree.body.collideWorldBounds = true;
+    tree.body.widthX = 65;
+    tree.body.widthY = 65;
     this.mapData.addObstacle(tree, dataX, dataY);
   }
 
