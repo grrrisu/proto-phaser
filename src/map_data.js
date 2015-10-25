@@ -120,7 +120,7 @@ Dawning.MapData = class MapData {
   }
 
   isWall(x, y){
-    return this.fieldProperty(x, y, false, function(field){
+    return this.fieldProperty(x, y, true, function(field){
       return field.wall;
     });
   }
