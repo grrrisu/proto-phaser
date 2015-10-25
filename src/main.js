@@ -8,7 +8,6 @@ import { Rabbit } from './rabbit';
 import { Leopard } from './leopard';
 import { MapData } from './map_data';
 import { Visability} from './visability';
-import { Map } from './map';
 import { IsoMap } from './iso_map';
 import { Game } from './game';
 
