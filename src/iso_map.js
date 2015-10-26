@@ -29,7 +29,7 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.iso.projectionAngle = 0.52;  // approximate value
 	  // set the middle of the world in the middle of the screen
-	  this.game.iso.anchor.setTo(0.2, 0);
+	  this.game.iso.anchor.setTo(0.5, 0);
 
     this.game.load.image('field', 'images/iso_field.png');
     this.game.load.image('grass', 'images/iso_grass.png');
