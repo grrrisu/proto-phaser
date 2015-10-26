@@ -33,6 +33,7 @@ Dawning.IsoMap = class IsoMap {
 
     this.game.load.image('field', 'images/iso_field.png');
     this.game.load.image('grass', 'images/iso_grass.png');
+    //this.game.load.image('grass', 'images/grass2.png');
 
     this.game.load.atlasJSONHash('tree', 'images/trees.png', 'images/trees.json');
 
@@ -86,6 +87,12 @@ Dawning.IsoMap = class IsoMap {
   createFloor(x, y, dataX, dataY){
     var floorTile = this.game.add.isoSprite(x + 40, y + 40, 1, 'grass', 0, this.floorGroup);
     floorTile.anchor.set(0.5);
+
+    var darkenColors = [0xffffff, 0xdddddd, 0xddffff, 0xffddff, 0xffffdd];
+    var tintColor = this.game.rnd.integerInRange(0, 4);
+    floorTile.tint = darkenColors[tintColor];
+    floorTile.originTint = floorTile.tint;
+
     this.mapData.addFloor(floorTile, dataX, dataY);
   }
 
@@ -97,14 +104,18 @@ Dawning.IsoMap = class IsoMap {
     } else if(type == 'x'){
       tree = this.game.add.isoSprite(x, y, 0, 'tree', 'bush_1.png', this.isoGroup);
     }
+    var darkenColors = [0xffffff, 0xdddddd, 0xddffff, 0xffddff, 0xffffdd];
+    var tintColor = this.game.rnd.integerInRange(0, 4);
+    tree.tint = darkenColors[tintColor];
+    tree.originTint = tree.tint;
 
     this.forest.push(tree);
     tree.anchor.set(0.5);
     this.game.physics.isoArcade.enable(tree);
     tree.body.immovable = true;
     tree.body.collideWorldBounds = true;
-    tree.body.widthX = 65;
-    tree.body.widthY = 65;
+    tree.body.widthX = this.fieldSize;
+    tree.body.widthY = this.fieldSize;
     this.mapData.addObstacle(tree, dataX, dataY);
   }
 

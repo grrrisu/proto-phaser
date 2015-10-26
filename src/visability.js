@@ -5,14 +5,15 @@ Dawning.Visability = class Visability {
   constructor(mapData){
     this.mapData = mapData;
     this.game = mapData.game;
+    this.darkness = [0xffffff, 0xdddddd, 0xcccccc, 0xbbbbbb, 0xaaaaaa, 0x999999, 0x888888, 0x777777, 0x666666];
   }
 
   highlightField(field){
     field.floors.forEach((sprite) => {
-      this.darkenSprite(sprite, 6, 0);
+      this.darkenSprite(sprite, this.darkness.length -1, 0);
     });
     field.obstacles.forEach((sprite) => {
-      this.darkenSprite(sprite, 6, 0);
+      this.darkenSprite(sprite, this.darkness.length -1, 0);
     });
     this.highlightThings(field);
   }
@@ -32,10 +33,10 @@ Dawning.Visability = class Visability {
 
   lowlightField(field){
     field.floors.forEach((sprite) => {
-      this.darkenSprite(sprite, 0, 6);
+      this.darkenSprite(sprite, 0, this.darkness.length -1);
     });
     field.obstacles.forEach((sprite) => {
-      this.darkenSprite(sprite, 0, 6);
+      this.darkenSprite(sprite, 0, this.darkness.length -1);
     });
     this.lowlightThings(field);
   }
@@ -47,11 +48,15 @@ Dawning.Visability = class Visability {
   }
 
   darkenSprite(sprite, startValue, endValue){
-    var darkness = [0xffffff, 0xdddddd, 0xcccccc, 0xbbbbbb, 0xaaaaaa, 0x999999, 0x888888];
     var colorBlend = {step: startValue};
     var colorTween = this.game.add.tween(colorBlend).to({step: endValue}, 500);
-    colorTween.onUpdateCallback(function() {
-      sprite.tint = darkness[Math.round(colorBlend.step)];
+    colorTween.onUpdateCallback(() => {
+      var currentStep = Math.round(colorBlend.step);
+      if(currentStep == 0 && sprite.originTint){
+        sprite.tint = sprite.originTint;
+      } else {
+        sprite.tint = this.darkness[currentStep];
+      }
     });
     colorTween.start();
   }
@@ -66,10 +71,10 @@ Dawning.Visability = class Visability {
   lowlightAll(){
     this.mapData.eachField((field, x, y) => {
       field.floors.forEach((sprite) => {
-        sprite.tint = 0x888888;
+        sprite.tint = this.darkness[this.darkness.length -1];
       });
       field.obstacles.forEach((sprite) => {
-        sprite.tint = 0x888888;
+        sprite.tint = this.darkness[this.darkness.length -1];
       });
       field.things.forEach((sprite) => {
         sprite.alpha = 0.0;
