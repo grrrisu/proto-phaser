@@ -17,10 +17,9 @@ Development
 
 ```
 gulp
-``
+```
 
-Run
----
+#### Run
 
 ```
 http-server
