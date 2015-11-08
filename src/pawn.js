@@ -9,15 +9,23 @@ Dawning.Pawn = class Pawn {
   }
 
   preload(){
-    this.game.load.atlasJSONHash('pawn', 'images/pawn.png', 'images/pawn.json');
+    this.game.load.atlasJSONHash('pawn', 'images/walk.png', 'images/walk.json');
   }
 
   createMan(x, y, dataX, dataY) {
-    this.man = this.game.add.isoSprite(x + this.padding, y + this.padding, 0, 'pawn', 0, this.map.isoGroup);
+    this.man = this.game.add.isoSprite(x + this.padding, y + this.padding, 0, 'pawn', 'standing_right@2x.png', this.map.isoGroup);
     this.man.anchor.set(0.5);
+    this.man.resolution = 2;
+    this.man.scale.set(0.5);
 
-    this.man.animations.add('standing', [0], 5, false, true);
-    this.man.animations.add('walk', [1,2,3,4], 5, true, true);
+    this.man.animations.add('standing_down', ['standing_down@2x.png'], 0, false, false);
+    this.man.animations.add('standing_left', ['standing_left@2x.png'], 0, false, false);
+    this.man.animations.add('standing_right', ['standing_right@2x.png'], 0, false, false);
+    this.man.animations.add('standing_up', ['standing_up@2x.png'], 0, false, false);
+    this.man.animations.add('walk_down', [4,5,6,7,8,9,5], 10, true, true);
+    this.man.animations.add('walk_left', [10,11,12,13,14,15,11], 10, true, true);
+    this.man.animations.add('walk_right', [16,17,18,19,20,21,17], 10, true, true);
+    this.man.animations.add('walk_up', [22,23,24,25,26,27,23], 10, true, true);
 
     this.game.physics.isoArcade.enable(this.man);
     this.man.enableBody = true;

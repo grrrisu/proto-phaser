@@ -36,24 +36,26 @@ Dawning.InputHandler = class InputHandler {
 
     if (this.cursors.left.isDown) {
       pawn.man.body.velocity.x = -speed;
-      pawn.man.animations.play('walk');
-      pawn.man.scale.x = -1;
+      pawn.man.animations.play('walk_left');
+      pawn.man.currentDirection = 'left';
       this.positionChanged(pawn);
     } else if (this.cursors.right.isDown) {
       pawn.man.body.velocity.x = speed;
-      pawn.man.animations.play('walk');
-      pawn.man.scale.x = 1;
+      pawn.man.animations.play('walk_right');
+      pawn.man.currentDirection = 'right';
       this.positionChanged(pawn);
     } else if (this.cursors.down.isDown) {
       pawn.man.body.velocity.y = speed;
-      pawn.man.animations.play('walk');
+      pawn.man.animations.play('walk_down');
+      pawn.man.currentDirection = 'down';
       this.positionChanged(pawn);
     } else if (this.cursors.up.isDown) {
       pawn.man.body.velocity.y = -speed;
-      pawn.man.animations.play('walk');
+      pawn.man.animations.play('walk_up');
+      pawn.man.currentDirection = 'up';
       this.positionChanged(pawn);
     } else {
-      pawn.man.animations.play('standing');
+      pawn.man.animations.play('standing_' + pawn.man.currentDirection);
     }
   }
 
