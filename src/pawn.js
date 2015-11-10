@@ -22,10 +22,14 @@ Dawning.Pawn = class Pawn {
     this.man.animations.add('standing_left', ['standing_left@2x.png'], 0, false, false);
     this.man.animations.add('standing_right', ['standing_right@2x.png'], 0, false, false);
     this.man.animations.add('standing_up', ['standing_up@2x.png'], 0, false, false);
-    this.man.animations.add('walk_down', [4,5,6,7,8,9,5], 10, true, true);
-    this.man.animations.add('walk_left', [10,11,12,13,14,15,11], 10, true, true);
-    this.man.animations.add('walk_right', [16,17,18,19,20,21,17], 10, true, true);
-    this.man.animations.add('walk_up', [22,23,24,25,26,27,23], 10, true, true);
+    this.man.animations.add('walk_down', [4,5,6,7,8,9,5], 8, true, true);
+    this.man.animations.add('walk_left', [10,11,12,13,14,15,11], 8, true, true);
+    this.man.animations.add('walk_right', [16,17,18,19,20,21,17], 8, true, true);
+    this.man.animations.add('walk_up', [22,23,24,25,26,27,23], 8, true, true);
+    this.man.animations.add('waving', ['waving_1@2x.png','waving_2@2x.png','waving_3@2x.png','waving_2@2x.png','waving_3@2x.png','waving_2@2x.png','waving_3@2x.png','waving_2@2x.png','waving_1@2x.png','standing_right@2x.png'], 3, false, false);
+
+    this.wave();
+    //this.game.time.events.add(2000, this.wave, this);
 
     this.game.physics.isoArcade.enable(this.man);
     this.man.enableBody = true;
@@ -34,6 +38,10 @@ Dawning.Pawn = class Pawn {
     this.game.camera.follow(this.man);
     this.visibleArea(dataX, dataY);
     return this;
+  }
+
+  wave(){
+    this.man.animations.play('waving');
   }
 
   update(){
